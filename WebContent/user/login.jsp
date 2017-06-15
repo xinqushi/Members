@@ -37,7 +37,8 @@ $(function(){
 			if(data == "0") {
 				layer.msg("用户名密码错误!");
 				$("[name='name']").focus();
-			} else {
+			} 
+			else {
 				location.href="${pageContext.request.contextPath}/user/login.jsp";
 			}
 		});

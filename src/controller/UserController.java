@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zefer.html.doc.s;
 
+import com.itextpdf.text.log.SysoLogger;
+
 import dao.AccountLogDAO;
 import dao.ExperienceDAO;
 import dao.MemberDAO;
@@ -477,6 +479,12 @@ public class UserController {
 		// 不是体验者,继续处理会员登录
 		// 以是否通过审核（member.flag）为标准，判断是否完成信息补全
 		String salt = userDAO.getSalt(user);
+//		User temp = userDAO.getUserByName(user.getName());
+//		if(user.getPwd().equals("12345678"))
+//		{
+//			session.setAttribute("moduser", temp);
+//			return "5";
+//		}
 		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
 		if (userDAO.checkValid(user).size() != 0) {
 			user = userDAO.checkValid(user).get(0);
@@ -559,11 +567,13 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/checkOldPwd.action")
 	public String checkOldPwd(String name, String old) throws Exception {
+		System.out.println("wojinlaile");
 		User user = new User();
 		user.setName(name);
 		String salt = userDAO.getSalt(user);
 		user.setPwd(MD5SaltUtils.encode(old, salt));
 		List<User> list = userDAO.getValid(user);
+		System.out.println(list.size()+"->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		if (list.size() > 0) {
 			return "OK";
 		} else {
@@ -584,7 +594,39 @@ public class UserController {
 		userDAO.update(user);
 		return "/personal/navbar";
 	}
-
+	/*
+	 * 修改舒适密码  修改成功后让其重新登录
+	 */
+	@RequestMapping("/changeInitPassword.action")
+	public String changeInitPassword(User user,HttpSession session) throws Exception {
+		String salt = userDAO.getSalt(user);
+		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
+		user.setSalt(salt);
+		userDAO.update(user);
+		session.setAttribute("TURE", null);
+		session.removeAttribute("admin");
+		session.removeAttribute("myuser");
+		session.removeAttribute("experience");
+		
+		return "redirect:/user/login.jsp";
+	}
+	/*
+	 * 
+	 * 检查初始化密码是否是12345678 如果是则强制修改
+	 * 
+	 * 
+	 */
+	@RequestMapping("/checkInitPwd.action")
+	@ResponseBody
+	public int checkInitPassword(User user) throws Exception
+	{
+		
+		if(user.getPwd().equals("dbf4acbb96656d323144c1ec244ef065"))
+		{
+			return 1;
+		}
+		return 0;
+	}
 	@RequestMapping("/checkExists.action")
 	@ResponseBody
 	public String checkExists(HttpServletResponse response, User user) throws IOException {
