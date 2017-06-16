@@ -21,6 +21,7 @@ $(function(){
 			{
 				if(data==1)
 				{
+					
 					location.href = "${pageContext.request.contextPath}/user/modify.jsp";
 				}
 			})

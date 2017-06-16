@@ -36,6 +36,9 @@ $(function(){
 		$.post(src,{name:name,pwd:pwd},function(data) {
 			if(data == "0") {
 				layer.msg("用户名密码错误!");
+				<%
+					session.removeAttribute("modify");
+				%>
 				$("[name='name']").focus();
 			} 
 			else {
