@@ -479,11 +479,9 @@ public class UserController {
 		// 不是体验者,继续处理会员登录
 		// 以是否通过审核（member.flag）为标准，判断是否完成信息补全
 		String salt = userDAO.getSalt(user);
-		//如果登录密码是12345678 则session里面存入修改密码的提醒modify为1
-		if(user.getPwd().equals("12345678"))
-		{
-			session.setAttribute("modify",1 );
-		}
+		//将salt放入session  在判断初始密码是否是12345678时有用到
+		session.setAttribute("salt", salt);	
+		
 		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
 		if (userDAO.checkValid(user).size() != 0) {
 			user = userDAO.checkValid(user).get(0);
@@ -566,13 +564,11 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/checkOldPwd.action")
 	public String checkOldPwd(String name, String old) throws Exception {
-		System.out.println("wojinlaile");
 		User user = new User();
 		user.setName(name);
 		String salt = userDAO.getSalt(user);
 		user.setPwd(MD5SaltUtils.encode(old, salt));
 		List<User> list = userDAO.getValid(user);
-		System.out.println(list.size()+"->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		if (list.size() > 0) {
 			return "OK";
 		} else {
@@ -594,7 +590,8 @@ public class UserController {
 		return "/personal/navbar";
 	}
 	/*
-	 * 修改初始密码  修改成功后让其重新登录
+	 * 新增：修改初始密码  修改成功后让其重新登录
+	 * 高鑫 2017-06-19
 	 */
 	@RequestMapping("/changeInitPassword.action")
 	public String changeInitPassword(User user,HttpSession session) throws Exception {
@@ -606,26 +603,28 @@ public class UserController {
 		session.removeAttribute("admin");
 		session.removeAttribute("myuser");
 		session.removeAttribute("experience");
-		
+		session.removeAttribute("modify");
 		return "redirect:/user/login.jsp";
 	}
 	/*
 	 * 
-	 * 检查初始化密码是否是12345678 如果是则强制修改
+	 *新增: 检查初始化密码是否是12345678 如果是则强制修改
 	 * 
-	 * 
+	 * 高鑫 2017-06-19
 	 */
 	@RequestMapping("/checkInitPwd.action")
 	@ResponseBody
 	public int checkInitPassword(User user,HttpSession session) throws Exception
 	{
-		
-		if((Integer)session.getAttribute("modify")==1)
+		String salt =(String)session.getAttribute("salt");
+		if(user.getPwd().equals(MD5SaltUtils.encode("12345678", salt)))
 		{
-			session.removeAttribute("modify");
+			session.removeAttribute("salt");
 			return 1;
 		}
 		return 0;
+		
+		
 	}
 	@RequestMapping("/checkExists.action")
 	@ResponseBody
