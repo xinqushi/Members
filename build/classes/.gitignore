@@ -1,9 +1,4 @@
+/config/
 /controller/
 /dao/
-/dto/
-/entity/
 /mapper/
-/pageinterceptor/
-/test/
-/tools/
-/visitListener/

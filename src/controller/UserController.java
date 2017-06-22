@@ -522,13 +522,15 @@ public class UserController {
 			}
 			user.setRoot(root);
 			session.removeAttribute("myuserinfo");
-			session.removeAttribute("myuser");
-			session.setAttribute("myuser", user);
+			//判断控制台输入的密码是否是12345678，如果不是，把当前用户存入session中。
+			if(!request.getParameter("pwd").equals("12345678")){
+				session.setAttribute("myuser", user);
+			}
 			// 项目重构需要
 			session.removeAttribute("USER");
 			session.setAttribute("USER", user);
-			session.removeAttribute("ADMIN");
-			//存会员最后一篇周报的id
+/*			session.removeAttribute("ADMIN");
+*/			//存会员最后一篇周报的id
 			//try-catch解决，第一册注册会员空指针错误，否则无法登陆
 			try {
 				int pid=summaryDAO.getMId(user.getMember().getId());
@@ -563,12 +565,17 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/checkOldPwd.action")
-	public String checkOldPwd(String name, String old) throws Exception {
+	public String checkOldPwd(String name, String old,HttpServletRequest reqeust) throws Exception {
 		User user = new User();
+		System.out.println(reqeust.getParameter("name"));
+		System.out.println(reqeust.getParameter("old"));
+		System.out.println(name);
 		user.setName(name);
 		String salt = userDAO.getSalt(user);
+		System.out.println("============="+salt);
 		user.setPwd(MD5SaltUtils.encode(old, salt));
-		List<User> list = userDAO.getValid(user);
+		//List<User> list = userDAO.getValid(user);
+		List<User> list = userDAO.getValidPwd(user);
 		if (list.size() > 0) {
 			return "OK";
 		} else {

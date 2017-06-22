@@ -53,12 +53,13 @@
     }
 </style>  
 <script type="text/javascript">
+	
 $(function(){
+	$.ajaxSetup({
+		  async: false
+		  });
 	$("[name='f1']").submit(function(){
 		var flag=true;
-		$.ajaxSetup({
-			  async: false
-			  });
 		$.post("${pageContext.request.contextPath}/user/checkOldPwd.action",{name:$("[name='name']").val(),old:$("[name='old']").val()},function(data){
 			if(data=="ERROR"){
 			$("#info").html("旧密码输入错误!");
@@ -80,8 +81,6 @@ $(function(){
 		if(!flag){
 			
 			return flag;
-			
-			
 		}
 		return  true;
 		alert("修改密码成功")
@@ -92,7 +91,8 @@ $(function(){
 </script>
 
 </head>
-<body>    	
+<body>    
+	
        	<div class="navHeader">
 
 </div>
@@ -108,8 +108,8 @@ $(function(){
     <div class="containerInput">
     	
        <form method="post" name="f1" action="${pageContext.request.contextPath}/user/changeInitPassword.action">
-       		  	<input type="hidden" name="name" value="${myuser.name}">
-				<input type="hidden" name="id" value="${myuser.id}">
+       		  	<input type="hidden" name="name" value="${USER.name}">
+				<input type="hidden" name="id" value="${USER.id}">
 	        <div class="everyInput">
 	            <span>输入旧密码:</span> <input  type="password"  class="input-xlarge" name="old" >
 	        </div>

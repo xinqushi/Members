@@ -47,7 +47,8 @@
 					i.contactMobile contactMobile,
 					i.address       address
 			 from user u ,member m,userinfo i
-			where u.id = m.uid and u.name=#{name} and u.pwd=#{pwd} and u.id=i.uid
+			where u.id = m.uid and u.name=#{name} and u.pwd=#{pwd}  
+			and u.id=i.uid
 			)newuser
 			left join
 				province p
@@ -57,7 +58,60 @@
 				provid = p.id
 			
 	</select>
-	
+		<select id="getValidPwd" parameterType="entity.User" resultMap="userinfo">
+	    select 
+	    	newuser.id id,newuser.name name,pwd,salt,registerTime,mid,aid,realName,sex,school,
+	    	company,mobile,student,graduateDate,joinTime,abnormal,flag,
+	    	alog,restAmount,restInterest,fee,provid,summaryflag,seat_provid,periodStatus,
+	    	iid,idNo,qqNo,payAccount,contactName,relation,contactMobile,address,
+	    	p.id pid,p.name pname
+	    from(
+			select 
+					u.id			id,
+					u.name 			name,
+					u.pwd			pwd,
+					u.salt			salt,				
+					u.time			registerTime,
+					u.noticeTime	noticeTime,
+					m.id			mid,
+					m.aid			aid,
+					m.name 			realName,
+					m.sex  			sex,
+					m.school		school,
+					m.company		company,
+					m.mobile		mobile,
+					m.student		student,
+					m.graduateDate	graduateDate,
+					m.time			joinTime,
+					m.abnormal		abnormal,
+					m.flag			flag,
+					m.alog			alog,
+					m.restAmount	restAmount,
+					m.restInterest	restInterest,
+					m.fee			fee,
+					m.provid        provid,
+					m.summaryflag	summaryflag,
+					m.seat_provid   seat_provid,
+					m.periodStatus  periodStatus,
+					i.id            iid,
+					i.idNo          idNo,
+					i.qqNo          qqNo,
+					i.payAccount    payAccount,
+					i.contactName   contactName,
+					i.relation      relation,
+					i.contactMobile contactMobile,
+					i.address       address
+			 from user u ,member m,userinfo i
+			where u.id = m.uid and u.name=#{name} and u.pwd=#{pwd}  
+			)newuser
+			left join
+				province p
+			on
+				provid = p.id
+			where 
+				provid = p.id
+			
+	</select>
 	<select id="checkValid" parameterType="entity.User" resultType="entity.User">
 		select * from user where name=#{name} and pwd=#{pwd}
 	</select>

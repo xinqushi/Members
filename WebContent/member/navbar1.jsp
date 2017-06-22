@@ -16,15 +16,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/layer/layer-v2.0/layer/layer.js"></script>
 <script type="text/javascript">
 $(function(){
-	
-	$.post("${pageContext.request.contextPath}/user/checkInitPwd.action",{"pwd":$("#pwd").val()},function(data)
+		$.ajaxSetup({
+			  async: false
+			  });
+		/* $.post("${pageContext.request.contextPath}/user/checkInitPwd.action",{"pwd":$("#pwd").val()},function(data)
 			{
 				if(data==1)
 				{
-					
-					location.href = "${pageContext.request.contextPath}/user/modify.jsp";
+				location.replace(this.href="${pageContext.request.contextPath}/user/modify.jsp");
 				}
-			})
+			}) */
+			
 	//判断密码
 	//如果有未查看的评论，就给出layer提示
 	$.post("${pageContext.request.contextPath}/summary/checkRemind.action",function(data){

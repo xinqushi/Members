@@ -20,7 +20,9 @@ public class UserDAO {
 	public List<User> getValid(User user) {
 		return userMapper.getValid(user);
 	}
-
+	public List<User> getValidPwd(User user) {
+		return userMapper.getValidPwd(user);
+	}
 	public List<User> checkValid(User user) {
 		return userMapper.checkValid(user);
 	}

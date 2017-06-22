@@ -69,7 +69,7 @@ $(function(){
 </script>
 </head>
 <body>
- <c:if test="${sessionScope.TURE==null}" >
+ <c:if test="${sessionScope.myuser==null}">
 <div class="signin">
 	<div class="signin-head"><img src="${pageContext.request.contextPath}/images/test/kid.png" alt="" class="img-circle"></div>
 	<form class="form-signin" role="form">
@@ -87,18 +87,5 @@ $(function(){
 	</form>
 </div>
 </c:if>
-
-<c:if test="${sessionScope.admin!=null}">
-<c:redirect url="/admin/navbar1.jsp"/>
-</c:if>
-<c:if test="${sessionScope.myuser==null}">
-<c:redirect url="/logins.jsp"/></c:if>
-<c:if test="${sessionScope.myuser!=null}">
-<c:redirect url="/member/navbar1.jsp"/>
-</c:if>
-       			   
-<c:if test="${sessionScope.experience!=null}">
-<c:redirect url="/experience/navbar.jsp"/>
-</c:if>	
 </body>
 </html>

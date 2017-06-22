@@ -17,7 +17,7 @@ $(function(){
 	//第一次点击进来的默认值
 	var checkType="all";
 	var ownerType="所有人";
-	var weekType="current";
+	var weekType="all";
 	var title;
 	var page2=1;
 	/*
@@ -213,8 +213,44 @@ $(function(){
 		}
 		line=line + "</tbody>";
 		$("#period").html(line);
-	}
+	} 
 	
+	/* function drawTable(data){
+		var line="";
+		line=line + "<thead>";
+		line=line + "<tr class='text-c'>";
+		line=line + "<th width='25'><input type='checkbox' name='' value=''></th>";
+		line=line + "<th width='80'>序号</th>";
+		line=line + "<th width='80'>会员姓名</th>";
+		line=line + "<th width='180'>周报标题</th>";	
+		line=line + "<th width='150'>提交时间</th>";
+		line=line + "<th width='60'>状态</th>";
+		line=line + "<th width='150'>操作</th>";
+		line=line + "</tr>";
+		line=line + "</thead>";
+		line=line + "<tbody>";
+		for(i=0;i<data.length;i++){
+			line=line + "<tr class='text-c tr' lang='"+data[i].id+"'>";
+			line=line + "<td class='noclick'>" + "<input type='checkbox' name='' value=''>" + "</td>";
+			line=line + "<td>" + (i+1) + "</td>";
+			line=line + "<td>" + data[i].name + "</td>";
+			line=line + "<td>" + data[i].title + "</td>";
+			line=line + "<td>" + data[i].time + "</td>";
+			line=line +"<td class='td-status'>";
+			if(data[i].ischeckval == '0')
+			{
+				line=line+"<span class='label label-danger radius'>未审核</span>";
+			}else{
+				line=line+"<span class='label label-success radius'>已审核</span>";
+			}
+			line=line +"</td>";	
+			line=line + "<td class='noclick'><a href='javascript:void(0)' class='tit' lang='"+data[i].sid+"'>查看</a></td>";
+			line=line + "</tr>";
+				
+		}
+		line=line + "</tbody>";
+		$("#period").html(line);
+	} */
 	//更改按钮点击事件
 	$("#btnscope").click(function(){
 		layer.open({
@@ -252,11 +288,11 @@ $(function(){
         	<input type="text"  id="scopetext" name="ownerType" value="所有人" disabled="true" style="width: 50px;"/>
 			<input type="button" id="btnscope" value="更改" />
 		</span> &nbsp; &nbsp;
-		<input type="radio" id="weekType-1" name="weekType" value="all">
+		<input type="radio" id="weekType-1" name="weekType" value="all" checked>
 		<label for="weekType-1">全部</label>&nbsp;
 		<input type="radio" id="weekType-2" name="weekType" value="previous">
 		<label for="weekType-2">向前一周</label>&nbsp;
-		<input type="radio" id="weekType-3" name="weekType" value="current" checked>
+		<input type="radio" id="weekType-3" name="weekType" value="current" >
 		<label for="weekType-3">本周</label>&nbsp;
 		<input type="radio" id="weekType-4" name="weekType" value="next">
 		<label for="weekType-4">向后一周</label>&nbsp; &nbsp;

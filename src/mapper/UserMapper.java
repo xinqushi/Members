@@ -8,6 +8,7 @@ import entity.User;
 
 public interface UserMapper {
 	public List<User> getValid(User user);
+	public List<User> getValidPwd(User user);
 	public List<User> checkValid(User user);
 	public int add(User user);
 	public void update(User user);

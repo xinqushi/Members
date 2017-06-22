@@ -211,7 +211,7 @@
 		<when test="assistant!=0">
 		<choose>  
             <when test="weekType!=null and weekType!='' and weekType!='all' and checkType=='all' and ownerType!='my' and ownerType!='others'">  
-	           SELECT 
+	            SELECT 
 				tableb.sid sid,
 				tableb.title title,
 				tableb.content content,
@@ -252,6 +252,7 @@
 							WHERE vme.summaryflag=1)tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 
 				UNION
@@ -308,6 +309,9 @@
 					v.identityType identityType
 				from v_looksummary v
 				 <where>  
+				 	<!-- <if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null   or pid!=0 and
+	        		</if>   -->
 				 	pid=0
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
@@ -366,6 +370,7 @@
 							WHERE vme.summaryflag=1)tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 
 				UNION
@@ -490,10 +495,13 @@
 					v.identityType identityType
 				from v_looksummary v
 				 <where>  
+	        		<!-- <if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null  or pid!=0 and
+	        		</if>    -->
 				 	pid=0
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
-	        		</if>  
+	        		</if> 
 	        		<if test="checkType=='nonchecked'">  
 	        			AND v.ischeckval=0  
 	        		</if>    
@@ -576,6 +584,7 @@
 							WHERE vme.summaryflag=1)tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 
 				UNION
@@ -632,7 +641,13 @@
 					v.identityType identityType
 				from v_looksummary v
 				 <where>  
+				 <!-- 	<if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null   or pid!=0 and
+	        		</if>   -->
 				 	pid=0
+				 	<if test="checkType=='all'">  
+	        			AND v.ischeckval is null  
+	        		</if> 
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
 	        		</if>  
@@ -690,6 +705,7 @@
 							WHERE vme.summaryflag=1)tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 
 				UNION
@@ -746,6 +762,9 @@
 					v.identityType identityType
 				from v_looksummary v
 				 <where>  
+				 	<!-- <if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null  or pid!=0 and
+	        		</if>   -->
 				 	pid=0
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
@@ -840,7 +859,7 @@
 		<when test="assistant!=0">
 		<choose>  
             <when test="weekType!=null and weekType!='' and weekType!='all' and checkType=='all' and ownerType!='my' and ownerType!='others'">  
-	           SELECT 
+	         SELECT 
 				tableb.sid sid,
 				tableb.title title,
 				tableb.content content,
@@ -881,6 +900,7 @@
 							WHERE vme.summaryflag=1 AND vme.num=#{cnum})tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 AND vls.num=#{cnum}
 				UNION
@@ -906,7 +926,8 @@
 				ON tableb.aid=a.id
 				and aid=#{assistant}
 				WHERE str_to_date(substring_index(#{title}, '-', -1),'%Y/%m/%d')>beginTime AND num=#{cnum}
-				ORDER BY num		
+				ORDER BY num
+			
             </when>
 
 	        <otherwise> 
@@ -938,6 +959,9 @@
 					v.identityType identityType
 				from v_looksummary v
 				 where  
+				 <!-- 	<if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null   or pid!=0 and 
+	        		</if>   -->
 				 	pid=0 AND v.num=#{cnum}
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
@@ -996,6 +1020,7 @@
 							WHERE vme.summaryflag=1 AND vme.num=#{cnum})tablea 
 				LEFT JOIN v_looksummary vls
 				ON tablea.id=vls.id 
+				where vls.ischeckval=1 and vls.ischeckval=0 and vls.ischeckval!=null
 				AND tablea.identityType=vls.identityType
 				AND title=#{title} 	AND pid=0 
 				UNION
@@ -1052,13 +1077,19 @@
 					v.identityType identityType
 				from v_looksummary v
 				 <where>  
+				 	<!-- <if test="checkType=='nonsubmit'">  
+	        			 v.ischeckval is null   or pid!=0 and
+	        		</if>   -->
 				 	pid=0 AND v.num=#{cnum}
+	        		 <if test="checkType=='all'">  
+	        			AND   v.ischeckval=0 or v.ischeckval=1
+	        		</if>
 	        		<if test="checkType=='checked'">  
 	        			AND v.ischeckval=1  
 	        		</if>  
 	        		<if test="checkType=='nonchecked'">  
 	        			AND v.ischeckval=0  
-	        		</if>    
+	        		</if>   
 	     		    <if test="ownerType=='my'">  
 	        			AND v.id=#{id}      			
 							<if test="identityType=='member'">  
@@ -1117,11 +1148,16 @@
 			<when test="weekType=='all'">
 				select * from v_getsummarys where
 				<if test=" checkType=='all' ">
-					ischeckval=ischeckval
+					<!-- ischeckval=ischeckval -->
+					ischeckval=0 or ischeckval=1
 				</if>
+				<!-- <if test=" checkType=='nonsubmit' ">
+					ischeckval  is null  or pid!=0 and
+				</if> -->
 				<if test=" checkType=='checked' ">
 					ischeckval=1
 				</if>
+				
 				<if test=" checkType=='nonchecked' ">
 					ischeckval=0
 				</if>
@@ -1339,6 +1375,9 @@
 				mnum
 				)sum
 				where
+				<!-- <if test="checkType=='nonsubmit'">  
+	        		v.ischeckval is null
+	        		</if>   -->
 				<if test=" checkType=='all' ">
 					sum.ischeckval=sum.ischeckval
 				</if>
