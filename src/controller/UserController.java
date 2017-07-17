@@ -15,6 +15,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -439,7 +440,6 @@ public class UserController {
 		ServletContext application = request.getServletContext();
 		// session.setMaxInactiveInterval(45);
 		String path = "login";
-
 		String num = user.getName();
 		String password = user.getPwd();
 		// 部分访客信息
@@ -450,15 +450,16 @@ public class UserController {
 		visitor.setAgent(flag);
 
 		// 体验者登录
-		String esalt = experienceDAO.getSaltByNum(num);
 		Experience experience = new Experience();
 		experience.setNum(num);
+		String esalt = experienceDAO.getSaltByNum(num);
+		if(experience.getNum().startsWith("TY")){
 		experience.setPassword(MD5SaltUtils.encode(password, esalt));
 		experience = experienceDAO.isValid(experience);
-		if (experience != null) {
+		if (experience!= null) {
 			// 项目重构需要
-			session.setAttribute("EXPERIENCE", experience);
 			session.setAttribute("experience", experience);
+			session.setAttribute("EXPERIENCE", experience);
 			session.setAttribute("TURE", experience);
 			session.setAttribute("SYSTEMINFO", new SystemInfo(request));
 			// 设置来访信息
@@ -475,18 +476,17 @@ public class UserController {
 			path = "/experience/navbar";
 			return "1";
 		}
-
+		}
 		// 不是体验者,继续处理会员登录
 		// 以是否通过审核（member.flag）为标准，判断是否完成信息补全
 		String salt = userDAO.getSalt(user);
 		//将salt放入session  在判断初始密码是否是12345678时有用到
 		session.setAttribute("salt", salt);	
-		
 		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
 		if (userDAO.checkValid(user).size() != 0) {
 			user = userDAO.checkValid(user).get(0);
 			int root = user.getRoot();
-			// session.setAttribute("Root", 0);
+			session.setAttribute("Root", 0);
 			List<User> memberlist = userDAO.getMemberInfo(user);
 			// user表,member表两个表中有有能链接的数据
 			
@@ -523,12 +523,18 @@ public class UserController {
 			user.setRoot(root);
 			session.removeAttribute("myuserinfo");
 			//判断控制台输入的密码是否是12345678，如果不是，把当前用户存入session中。
+			session.removeAttribute("myuser");
+			//session.removeAttribute("experience");
+			//session.removeAttribute("TURE");
 			if(!request.getParameter("pwd").equals("12345678")){
 				session.setAttribute("myuser", user);
+				//session.setAttribute("experience", experience);
 			}
 			// 项目重构需要
 			session.removeAttribute("USER");
 			session.setAttribute("USER", user);
+			//session.removeAttribute("experience");
+			//session.setAttribute("experience", experience);
 /*			session.removeAttribute("ADMIN");
 */			//存会员最后一篇周报的id
 			//try-catch解决，第一册注册会员空指针错误，否则无法登陆
@@ -546,8 +552,7 @@ public class UserController {
 			session.setAttribute("conut", count);
 			int allcount = pictureDAO.allcount(uid);
 			session.setAttribute("allconut", allcount);
-			//
-			// session.setAttribute("myuser", user);
+			session.setAttribute("myuser", user);
 			session.setAttribute("SYSTEMINFO", new SystemInfo(request));
 			// 会员登录时将用户保存在session中，用于页面判断是否首次登陆。
 			session.setAttribute("TURE", user);
@@ -567,19 +572,31 @@ public class UserController {
 	@RequestMapping("/checkOldPwd.action")
 	public String checkOldPwd(String name, String old,HttpServletRequest reqeust) throws Exception {
 		User user = new User();
-		System.out.println(reqeust.getParameter("name"));
-		System.out.println(reqeust.getParameter("old"));
-		System.out.println(name);
-		user.setName(name);
-		String salt = userDAO.getSalt(user);
-		System.out.println("============="+salt);
-		user.setPwd(MD5SaltUtils.encode(old, salt));
-		//List<User> list = userDAO.getValid(user);
-		List<User> list = userDAO.getValidPwd(user);
-		if (list.size() > 0) {
-			return "OK";
-		} else {
-			return "ERROR";
+		Experience experience=new Experience();
+		System.out.println(name+"3322222222222222");
+		if(experienceDAO.getNumByName(name)!=null){
+			System.out.println(name+"$$###@%#$%#$%#$%#$%#$%$#%#$%");
+			String salt=experienceDAO.getSaltByNum(experienceDAO.getNumByName(name));
+			experience.setNum(experienceDAO.getNumByName(name));
+			experience.setSalt(salt);
+			experience.setPassword(MD5SaltUtils.encode(old, salt));
+			int count =experienceDAO.isValidPwd(experience);
+			System.out.println(count+")))))))))))))))))))))))))");
+			if (count > 0){
+				return "OK";
+			} else {
+				return "ERROR";
+			}
+		}else{
+			user.setName(name);
+			String salt = userDAO.getSalt(user);
+			user.setPwd(MD5SaltUtils.encode(old, salt));
+			List<User> list = userDAO.getValidPwd(user);
+			if (list.size() > 0){
+				return "OK";
+			} else {
+				return "ERROR";
+			}
 		}
 	}
 
@@ -601,16 +618,31 @@ public class UserController {
 	 * 高鑫 2017-06-19
 	 */
 	@RequestMapping("/changeInitPassword.action")
-	public String changeInitPassword(User user,HttpSession session) throws Exception {
-		String salt = userDAO.getSalt(user);
-		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
-		user.setSalt(salt);
-		userDAO.update(user);
-		session.setAttribute("TURE", null);
+	public String changeInitPassword(User  user,HttpSession session,HttpServletRequest request) throws Exception {
+		Experience experience=new 	Experience();
+		System.out.println("---------------------");
+		if(experienceDAO.getNumByName(user.getName()) !=null){
+			experience.setNum(experienceDAO.getNumByName(user.getName()));
+			String salt = experienceDAO.getSaltByNum(experience.getNum());
+			experience.setSalt(salt);
+			System.out.println(user.getPwd()+"&&&&&&&&&&&&&&&&&&");
+			experience.setPassword(MD5SaltUtils.encode(user.getPwd(), salt));
+			experience.setNum(experience.getNum());
+			experienceDAO.updatePwd(experience);
+			
+		}else{
+			String salt = userDAO.getSalt(user);
+			System.out.println(salt);
+			user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
+			user.setSalt(salt);
+			userDAO.update(user);
+		}
+		//session.setAttribute("TURE", null);
 		session.removeAttribute("admin");
 		session.removeAttribute("myuser");
 		session.removeAttribute("experience");
 		session.removeAttribute("modify");
+		
 		return "redirect:/user/login.jsp";
 	}
 	/*
@@ -664,14 +696,15 @@ public class UserController {
 		// 体验者登录
 		String num = user.getName();
 		String password = user.getPwd();
+		if(user.getName().startsWith("TY")){
 		String esalt = experienceDAO.getSaltByNum(num);
 		Experience experience = new Experience();
 		experience.setNum(num);
 		experience.setPassword(MD5SaltUtils.encode(password, esalt));
 		experience = experienceDAO.isValid(experience);
 		if (experience != null) {
-			// System.out.println(experience);
 			session.setAttribute("experience", experience);
+			session.setAttribute("EXPERIENCE", experience);
 			session.setAttribute("TURE", experience);
 			session.setAttribute("SYSTEMINFO", new SystemInfo(request));
 			if (state.equals("1")) {
@@ -687,7 +720,9 @@ public class UserController {
 			}
 			return "1";
 		}
+		}
 
+		
 		String salt = userDAO.getSalt(user);
 		user.setPwd(MD5SaltUtils.encode(user.getPwd(), salt));
 		List<User> list = userDAO.getValid(user);
@@ -739,7 +774,9 @@ public class UserController {
 		QueryType queryType = new QueryType();
 		queryType.setType(1);
 		queryType.setNo(id);
+		System.out.println("===++++++"+userDAO.getUser(queryType).size());
 		User user = userDAO.getUser(queryType).get(0);
+		
 		inputHTMLFileName = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator
 					+ "html" + java.io.File.separator + "contractOfEverybody.html";
 		UserInfo userInfo = new UserInfo();
@@ -754,6 +791,7 @@ public class UserController {
 				+ java.io.File.separator + fileName + ".pdf";
 		// 获得修改后的路径htmlpath
 		String lasthtmlPath = generatePDF.replaceKeyWords(user, inputHTMLFileName, htmlPath, pdfPath, userInfo);
+		
 		GeneratePDF converter = new GeneratePDF();
 		// 用于把html文件转化为Pdf文件
 		converter.generatePDF(lasthtmlPath, new File(pdfPath));
@@ -898,7 +936,9 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/checkUserSession.action", method = RequestMethod.POST)
-	public String checkUserSession(HttpSession session) {
+	public String checkUserSession(HttpSession session ) {
 		return VerifyIdentity.verifyUser(session) != null ? "1" : "0";
 	}
+	
+	
 }

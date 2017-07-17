@@ -38,7 +38,7 @@
 				qq : {
 					required : true,
 					digits : true,
-					rangelength : [ 5, 10 ],
+					rangelength : [ 5, 11 ],
 					remote : {
 						url : "${pageContext.request.contextPath}/clue/checkQq.action", //后台处理程序
 						type : "post", //数据发送方式
@@ -61,7 +61,7 @@
 				qq : {
 					required : "qq号不能为空!",
 					digits : "请输入正确的qq号!",
-					rangelength : "请输入5~10个数字的qq号",
+					rangelength : "请输入5~11个数字的qq号",
 					remote : "该qq号已经存在"
 				},
 				date : {

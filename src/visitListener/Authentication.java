@@ -14,6 +14,7 @@ public class Authentication extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String url = request.getRequestURI().substring(request.getContextPath().length());
+		System.out.println(url);
 		if ("/admin/check.action".equals(url) || "/user/check.action".equals(url)) {
 			return true;
 		}

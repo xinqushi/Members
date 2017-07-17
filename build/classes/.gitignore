@@ -1,4 +1,15 @@
 /config/
 /controller/
 /dao/
+/db.properties
+/dto/
+/entity/
+/fonts/
+/log4j.properties
 /mapper/
+/mybatis-cfg.xml
+/pageinterceptor/
+/sqlMapConfig.xml
+/test/
+/tools/
+/visitListener/

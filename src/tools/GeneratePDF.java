@@ -132,6 +132,7 @@ public class GeneratePDF {
 			file.delete();
 		}
 		// 往文件中写入字符串
+		//向文件中传入内容的时候，找不到目录，文件的目录找不到。
 		OutputStream os = new FileOutputStream(file);
 		os.write(data.getBytes());
 		// 把html输出到输出流中

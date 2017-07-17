@@ -39,8 +39,12 @@
 		summaryflag = #{summaryflag}
 		where id = #{id}
 	</update>
-
-
+	<update id="updatePwd" parameterType="entity.Experience">
+			update experience set
+			password = #{password},
+			salt = #{salt}
+			where num = #{num}
+	</update>
 	<insert id="add" parameterType="entity.Experience"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
@@ -53,6 +57,9 @@
 	</select>
 	<select id="getSaltByNum" parameterType="String" resultType="String">
 		select salt from experience where num=#{num}
+	</select>
+	<select id="getNumByName" parameterType="String" resultType="String">
+		select num from experience where name=#{name}
 	</select>
 	<select id="getUidById" parameterType="int" resultType="Integer">
 		SELECT
@@ -78,7 +85,11 @@
 		select * from experience where num=#{num} and
 		`password`=#{password}
 	</select>
-
+	<select id="isValidPwd" resultType="Integer"
+		parameterType="entity.Experience">
+		select count(*) from experience where num=#{num} and
+		`password`=#{password}
+	</select>
 	<!-- * 修改：添加出生地seat_provid * 作者：王德斌 * 日期：2016-10-13 -->
 	<select id="getExperienceById" resultMap="experience"
 		parameterType="int">

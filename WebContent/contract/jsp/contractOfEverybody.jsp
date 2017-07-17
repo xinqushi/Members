@@ -148,7 +148,6 @@ ol{
 <p style="height: 35px;padding-top: 15px; padding-bottom: 10px;"><strong>七、其他事项 </strong></p>
 
 <p style="text-indent:2em;" >为了更好地为甲方提供终身服务，帮助甲方在工作中提高，甲方正常就业后，需要提交工作单位信息，录用信息。不愿提交工作单位信息者，视为主动放弃终身服务，乙方将不再为甲方提供任何技术支持服务，乙方可以立即开始追偿甲方所欠的所有费用。 </p>
-<p style="text-indent:2em;" > 本合同在执行过程中产生的任何有关法律方面的纠纷，由武军社律师全权代理。任何与法律相关的问题，请咨询武军社，联系电话：13693101282。</p>
 <p style="height: 35px;padding-top: 15px; padding-bottom: 10px;"><strong>八、附件资料 </strong></p>
 <ol style="list-style-type:upper-roman">
   <li>甲方： </li>
@@ -168,12 +167,12 @@ ol{
   </tr>
   <tr>
     <td>本人收件地址:</td>
-    <td>${myuser.userInfo.address }</td>
+    <td><strong>${myuser.userInfo.address }</strong></td>
   </tr>
 </table>
 <li>乙方： </li>
 <p style="text-indent:2em;" >公司营业执照复印件(北京趋势前程科技有限公司)、毕业证复印件、学位证复印件、MCP、MCSE、MCDBA证书复印件，联系电话，近期全身免冠照片。 </p>
-<p style="text-indent:2em;" >乙方收件地址:北京市通州区万达广场A座917室  张中强 <nobr>联系电话:010-57120799</nobr></p>
+<p style="text-indent:2em;" >乙方收件地址:<span><strong>北京市通州区北苑杨庄路芳洲花园3-741VIP基地</strong></span>  张中强 <nobr>联系电话:010-57120799  18610940288</nobr></p>
 </ol>
 <p style="height: 35px; padding-top: 15px; padding-bottom: 10px;"><strong>九、其他事项</strong></p>
 <p style="text-indent:2em;" >甲乙双方应保证所提供信息的真实性，提供虚假信息视为单方面违约。甲方提供虚假资料信息需立即支付乙方所有剩余学费。乙方提供虚假资料信息需立即偿还甲方所交学费，并按合同总标的赔偿给甲方带来的损失。</p>

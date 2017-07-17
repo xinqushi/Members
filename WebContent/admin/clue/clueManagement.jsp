@@ -50,7 +50,7 @@
 		/* 由QQ号查询数据  */
 		$("#qqsearch").click(function() {
 			qq = $.trim($("#qq").val());
-			var reg = /^\d{1,10}$/;
+			var reg = /^\d{1,11}$/;
 			if (qq == "") {
 				layer.msg("QQ号的输入不能为空！", {
 					icon : 0
@@ -483,6 +483,10 @@
 						<option value="32">刘文启</option>
 						<option value="54">陈家豪</option>
 						<option value="41">张晓敏</option>
+						<option value="56">吴国春</option>
+						<option value="61">任瑞岩</option>
+						<option value="62">熊杰</option>
+						<option value="63">曾堉萱</option>
 					</select>
 				</span>
 				<input id="qq" type="text" placeholder="QQ号" style="width: 100px"

@@ -116,11 +116,9 @@
 			row += "<td>" + data[i].member.name + "</td>";
 			row += "<td>" + data[i].member.school + "</td>";
 			row += "<td>" + data[i].member.mobile + "</td>";
-			alert(data[i].member.alog>0);
 			if(data[i].member.alog >0) {
 				$.post("${pageContext.request.contextPath}/member/getByMidAndFlag.action",{mid : data[i].member.id},function(data2) {
 					var dataObj = eval("("+data2+")");
-					alert(dataObj.toString());
 					var lists = dataObj.returnMap.list;
 					for(j = 0; j <lists.length; j++) {
 						line = line + row + "<td style='color:red;'>" + lists[j].amount + "</td>";

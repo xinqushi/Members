@@ -151,7 +151,9 @@
 	<select id="getSalt" parameterType="entity.User" resultType="String">
 		select salt from user where name=#{name}
 	</select>
-	
+	<!-- <select id="getSalt" parameterType="int" resultType="String">
+		select salt from user where id=#{id}
+	</select> -->
 	<select id="getExist" parameterType="entity.User" resultType="entity.User">
 		select * from user where name=#{name}
 	</select>

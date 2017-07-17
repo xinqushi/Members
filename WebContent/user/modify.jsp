@@ -58,6 +58,10 @@ $(function(){
 	$.ajaxSetup({
 		  async: false
 		  });
+	<%
+		session.removeAttribute("myuser");
+		session.removeAttribute("experience");
+	%>
 	$("[name='f1']").submit(function(){
 		var flag=true;
 		$.post("${pageContext.request.contextPath}/user/checkOldPwd.action",{name:$("[name='name']").val(),old:$("[name='old']").val()},function(data){
@@ -82,8 +86,8 @@ $(function(){
 			
 			return flag;
 		}
+		alert("修改密码成功");
 		return  true;
-		alert("修改密码成功")
 		
 	});
 });	
@@ -92,7 +96,6 @@ $(function(){
 
 </head>
 <body>    
-	
        	<div class="navHeader">
 
 </div>
@@ -108,16 +111,25 @@ $(function(){
     <div class="containerInput">
     	
        <form method="post" name="f1" action="${pageContext.request.contextPath}/user/changeInitPassword.action">
-       		  	<input type="hidden" name="name" value="${USER.name}">
-				<input type="hidden" name="id" value="${USER.id}">
+       		  <c:choose>
+
+			   <c:when test="${sessionScope.USER!=null }">  
+			    	<input type="hidden" name="name" value="${USER.name}">
+					<input type="hidden" name="id" value="${USER.id}">
+			   </c:when>
+			   <c:when test="${sessionScope.EXPERIENCE!=null }">  
+				    	<input type="hidden" name="name" value="${EXPERIENCE.name}">
+						<input type="hidden" name="id" value="${EXPERIENCE.id}">
+			  	</c:when>
+			</c:choose>
 	        <div class="everyInput">
-	            <span>输入旧密码:</span> <input  type="password"  class="input-xlarge" name="old" >
+	            <span>输入旧密码:</span> <input  type="text"  class="input-xlarge" name="old" >
 	        </div>
 	        <div class="everyInput">
-	           <span>输入新密码:</span>  <input  type="password" class="input-xlarge" name="pwd">
+	           <span>输入新密码:</span>  <input  type="text" class="input-xlarge" name="pwd">
 	        </div>
 	        <div class="everyInput">
-	              <span>重复新密码:</span>  <input  type="password"   class="input-xlarge" name="pwd1">
+	              <span>重复新密码:</span>  <input  type="text"   class="input-xlarge" name="pwd1">
 	        </div>
 	        <div class="everyInput">
 	            <button class="btn btn-block btn-info" type="submit">确定</button>

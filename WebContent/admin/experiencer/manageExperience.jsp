@@ -407,6 +407,10 @@
 						<option value="32">刘文启</option>
 						<option value="54">陈家豪</option>
 						<option value="41">张晓敏</option>
+						<option value="56">吴国春</option>
+						<option value="61">任瑞岩</option>
+						<option value="62">熊杰</option>
+						<option value="63">曾堉萱</option>
 					</select>
 				</span>
 				<input id="qq" type="text" placeholder="QQ号" style="width: 100px"

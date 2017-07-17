@@ -43,10 +43,16 @@ public interface ExperienceMapper {
 	public int getUidById(int id);
 
 	public String getSaltByNum(String num);
-
+	
+	public String getNumByName(String name);
+	
 	public Experience isValid(Experience experience);
-
+	
+	public int isValidPwd(Experience experience);
+	
 	public void update(Experience experience);
 
+	public void updatePwd(Experience experience); 
+	
 	public int countExperienceUid(int id);
 }

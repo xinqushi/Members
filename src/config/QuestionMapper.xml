@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.QuestionMapper">
+	<!-- 提取问题分享信息 -->
+	<select id="getQuestions" parameterType="int" resultType="entity.Question">
+		select
+		* from questions where cId=#{cId};
+	</select>
+	<!-- 添加问题分享 -->
+	<insert id="addQuestion" parameterType="entity.Question">
+		insert into
+		questions(cId,question,qperson,solution,sperson,time)
+		value(#{cId},#{question},#{qperson},#{solution},#{sperson},#{time});
+	</insert>
+</mapper>

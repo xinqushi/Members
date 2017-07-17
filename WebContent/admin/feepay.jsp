@@ -36,7 +36,6 @@
 
 		/* 分页查询  */
 		function btnpage() {
-			alert("==============")
 			$(".nav-btn").click(function() {
 				var page = this.lang;
 				getData($(".active").attr("lang"), page);

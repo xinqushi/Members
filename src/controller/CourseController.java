@@ -159,6 +159,7 @@ public class CourseController {
 	@RequestMapping("/getLessons.action")
 	public List<Course> getLessons(int chid)
 	{	
+
 		return courseDAO.getLessons(chid);	
 	}
 	

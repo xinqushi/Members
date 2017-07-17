@@ -36,13 +36,13 @@ $(function(){
 			src = "${pageContext.request.contextPath}/admin/check.action";
 		}
 		$.post(src,{name:name,pwd:pwd},function(data) {
+			alert(data);
 			if(data == "0") {
 				layer.msg("用户名密码错误!");
 				$("[name='name']").focus();
 			} 
 			else if($("[name='pwd']").val()=="12345678"){
 				location.replace(this.href="${pageContext.request.contextPath}/user/modify.jsp");
-				//event.returnValue=false;
 			}
 			else {
 				location.href="${pageContext.request.contextPath}/user/login.jsp";
@@ -69,7 +69,7 @@ $(function(){
 </script>
 </head>
 <body>
- <c:if test="${sessionScope.TURE==null}" >
+ <c:if test="${sessionScope.myuser==null}" >
 <div class="signin">
 	<div class="signin-head"><img src="${pageContext.request.contextPath}/images/test/kid.png" alt="" class="img-circle"></div>
 	<form class="form-signin" role="form">
@@ -93,11 +93,12 @@ $(function(){
 </c:if>
 <c:if test="${sessionScope.myuser==null}">
 <c:redirect url="/logins.jsp"/></c:if>
+<c:if test="${sessionScope.experience==null}">
+<c:redirect url="/logins.jsp"/></c:if>
 <c:if test="${sessionScope.myuser!=null}">
 <c:redirect url="/member/navbar1.jsp"/>
 </c:if>
-       			   
-<c:if test="${sessionScope.experience!=null}">
+ <c:if test="${sessionScope.experience!=null}">
 <c:redirect url="/experience/navbar.jsp"/>
 </c:if>	
 </body>

@@ -57,7 +57,6 @@ public class ExperienceController {
 	@ResponseBody
 	@RequestMapping("/add.action")
 	public String add(HttpServletRequest request, HttpSession session, Experience experience) {
-		// System.out.println(experience);
 		String salt = MD5SaltUtils.randomCreateSalt();
 		experience.setPassword(MD5SaltUtils.encode(experience.getPassword(), salt));
 		experience.setSalt(salt);
@@ -95,6 +94,7 @@ public class ExperienceController {
 	@ResponseBody
 	@RequestMapping("/checkExists.action")
 	public int checkExists(HttpServletRequest request, HttpSession session, String num) {
+		
 		if (experienceDAO.checkExists(num) > 0) {
 			return 1;
 		}
@@ -544,5 +544,4 @@ public class ExperienceController {
 		experienceDAO.update(experience);
 		return null;
 	}
-
 }

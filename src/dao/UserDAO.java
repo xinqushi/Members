@@ -50,7 +50,9 @@ public class UserDAO {
 	public String getSalt(User user) {
 		return userMapper.getSalt(user);
 	}
-
+	public String getSalt(int id) {
+		return userMapper.getSalt(id);
+	}
 	/*
 	 * 作者:陈泽帆
 	 */

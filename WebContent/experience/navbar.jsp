@@ -13,6 +13,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/layer/layer-v2.0/layer/layer.js"></script>
 <script type="text/javascript">
 $(function(){
+	$.ajaxSetup({
+		  async: false
+		  });
 	$(".wrap").load("${pageContext.request.contextPath}/experience/infoshow.jsp");	
 	$("[title='主页']").click(function(){
 		$(".wrap").load("${pageContext.request.contextPath}/experience/infoshow.jsp");
@@ -31,20 +34,13 @@ $(function(){
 	});
 	taggleWriteAndModify();
 	writeclick();
-	modifyclick();								
+	modifyclick();	
+	
 });
 
 function exit(){
-	if(confirm("确定要退出吗？"))
-	 {
+	if(confirm("确定要退出吗？")) {
 		$.post("${pageContext.request.contextPath}/user/clearSession.action",function(data) {
-			var returnMap = eval("(" + data + ")").returnMap;
-			var statusCode = returnMap.statusCode;
-			if (statusCode.errNum != 100) {
-				layer.msg("<strong style='color:red;'>" + statusCode.errMsg + "</strong>", {icon : 2});
-				return ;
-			}
-			//正式开始处理数据
 			window.location.href="${pageContext.request.contextPath}/index.jsp";
 		});
 	 }		

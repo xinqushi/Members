@@ -187,7 +187,6 @@
 					<li><a href="#/thanksgiving/restinfo.jsp" class="menuItem" title="利息市场"><i></i><i></i><i></i>利息市场</a></li>
 					<li><a href="#/admin/calculator.jsp" class="menuItem" title="费用计算"><i></i><i></i><i></i>费用计算</a></li>
 					<!-- <li><a href="javascript:;" title="费用统计"><i></i><i></i><i></i>费用统计</a></li> -->
-					<li><a href="#/admin/fee2.jsp" class="menuItem" title="缴费信息"><i></i><i></i><i></i>缴费信息2</a></li>
 				</ul>
 			</li>
 			<li class="menu-list">

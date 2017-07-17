@@ -41,8 +41,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div id="home" class="top-header">
 	 <div class="container">
 		 <div class="logo">
-
- <c:if test="${sessionScope.TURE!=null}" >
+<c:if test="${sessionScope.TURE!=null}" >
 				<h1><a href="${pageContext.request.contextPath}/user/jumps.jsp">Join</a></h1>
 				</c:if>
  <c:if test="${sessionScope.TURE==null}" >

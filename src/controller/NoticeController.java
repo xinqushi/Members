@@ -155,7 +155,8 @@ public class NoticeController {
 	@RequestMapping("/notice.action")
 	@ResponseBody
 	public String notice(HttpSession session) throws ParseException{
-		User user=(User) session.getAttribute("myuser");
+		User user=(User) session.getAttribute("TURE");
+		System.out.println(user.getId()+"--------------------");
 		String time = noticeDAO.getnoticeTime(user.getId());
 		Map<String, Object> map=noticeDAO.getLastest();
 		if(map==null)

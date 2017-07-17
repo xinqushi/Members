@@ -1023,6 +1023,8 @@ public class SummaryController {
 			Experience experience = (Experience) session.getAttribute("experience");
 			summary.setEid(experience.getId());
 		}
+		System.out.println("---------风格先");
+		System.out.println("---------风格先"+session.getAttribute("experience") != null);
 		summary.setTitle(SummaryTitle.getWriteTitle());
 		return summaryDAO.getCurrentSummary(summary).getIscheck();
 

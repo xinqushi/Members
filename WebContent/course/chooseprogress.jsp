@@ -26,7 +26,7 @@ $(function() {
 			getcachapter(id);
 		}
 		categoryclick();
-		imgclck();
+		imgclck();	
 	});
 	function getcachapter(id){
 		$.ajaxSetup({async:false});
@@ -94,6 +94,7 @@ $(function() {
 			}
 		}
 		$(".l").append(line);
+		
 	}
 	
 	function showchapter(data){
@@ -137,7 +138,7 @@ $(function() {
 					}else{
 						img="<img src='${pageContext.request.contextPath}/images/x-red.png' class='pflag' lang='"+data[i].courseAndCategory.order+","+data2[j].order+","+data2[j].title+"' style='padding-left:30px;'>";
 					}
-					line=line+"<p ><a herf='#' style='text-decoration:none' target='_self'>"+data2[j].title+ img +"</a></p>";	
+					line=line+"<p ><a href='${pageContext.request.contextPath}/question/getQuestion.action?cId="+data2[j].id+"' style='text-decoration:none' title='课程章节' target='_blank'>"+data2[j].title+ img +"</a></p>";	
 					}
 				line=line+"</div>";
 				line = line + "</li>";				
@@ -261,6 +262,8 @@ function query(data) {
 	</div>
 	<div style="text-align: center; clear: both"></div>
 
-
+	<!-- 内容 -->
+	    <div class="uk-width-8-10" id="content">
+	    </div>
 </body>
 </html>

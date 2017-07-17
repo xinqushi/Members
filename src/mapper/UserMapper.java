@@ -17,6 +17,7 @@ public interface UserMapper {
 	public List<User> getUser(QueryType queryType);	
 	public List<User> getExist(User user);
 	public String getSalt(User user);
+	public String getSalt(int id);
 	public List<User> getInfo();
 	public List<User> getInfoByPage(UserDTO userDTO);
 	public void deleteById(int id);

@@ -51,7 +51,7 @@ $(function(){
 <div class="main">
        <form method="post" name="f1" action="${pageContext.request.contextPath}/user/changePassword.action">
        	<input type="hidden" name="name" value="${myuser.name}">
-<input type="hidden" name="id" value="${myuser.id}">
+		<input type="hidden" name="id" value="${myuser.id}">
 		
        	<legend class="controls">修改密码</legend>
           <div class="control-group">

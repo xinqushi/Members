@@ -118,7 +118,9 @@ public class ExperienceDAO {
 	public String getNum() {
 		return experienceMapper.getNum();
 	}
-
+	public String getNumByName(String name) {
+		return experienceMapper.getNumByName(name);
+	}
 	public int getUidById(int id) {
 		if (experienceMapper.countExperienceUid(id) == 0) {
 			return 0;
@@ -141,6 +143,17 @@ public class ExperienceDAO {
 	public void print(List<Experience> list, String[] headers, String path, String title) throws IOException {
 		ExperienceFileExcel ef = new ExperienceFileExcel();
 		ef.exportExcel(title, headers, list, path);
+	}
+
+	public int isValidPwd(Experience experience) {
+		// TODO Auto-generated method stub
+		System.out.println("22222222222");
+		System.out.println(experience);
+		return experienceMapper.isValidPwd(experience);
+	}
+
+	public void updatePwd(Experience experience) {
+		experienceMapper.updatePwd(experience);
 	}
 
 }

@@ -35,6 +35,7 @@ $(function(){
 		if(flag == "admin") {
 			src = "${pageContext.request.contextPath}/admin/check.action";
 		}
+		
 		$.post(src,{name:name,pwd:pwd},function(data) {
 			if(data == "0") {
 				layer.msg("用户名密码错误!");
@@ -42,7 +43,6 @@ $(function(){
 			} 
 			else if($("[name='pwd']").val()=="12345678"){
 				location.replace(this.href="${pageContext.request.contextPath}/user/modify.jsp");
-				//event.returnValue=false;
 			}
 			else {
 				location.href="${pageContext.request.contextPath}/user/login.jsp";
@@ -69,23 +69,65 @@ $(function(){
 </script>
 </head>
 <body>
- <c:if test="${sessionScope.myuser==null}">
-<div class="signin">
-	<div class="signin-head"><img src="${pageContext.request.contextPath}/images/test/kid.png" alt="" class="img-circle"></div>
-	<form class="form-signin" role="form">
-		${requestScope.chmod }
-		<input type="text" name="name" id="name" class="form-control" placeholder="用会员编号登录" required autofocus />
-		<input type="password" name="pwd" id="pwd" class="form-control" placeholder="密码" required />
-	<div>
-      <div id="bt1" class="bt">
-   		 <button class="btn btn-lg btn-warning btn-block" type="submit" lang="user">&nbsp;会员登录&nbsp;</button>
-   	  </div>
-  	  <div id="bt2" class="bt">
-		<button class="btn btn-lg btn-warning btn-block" value="remember-me" lang="admin">管理员登录</button>
-	  </div>
-	</div>
-	</form>
-</div>
+<c:choose>
+
+			   <c:when test="${sessionScope.myuser==null }">  
+			    	<div class="signin">
+				<div class="signin-head">
+					<img src="${pageContext.request.contextPath}/images/test/kid.png"
+						alt="" class="img-circle">
+				</div>
+				<form class="form-signin" role="form">
+					${requestScope.chmod } <input type="text" name="name" id="name"
+						class="form-control" placeholder="用会员编号登录" required autofocus />
+					<input type="password" name="pwd" id="pwd" class="form-control"
+						placeholder="密码" required />
+					<div>
+						<div id="bt1" class="bt">
+							<button class="btn btn-lg btn-warning btn-block" type="submit"
+								lang="user">&nbsp;会员登录&nbsp;</button>
+						</div>
+						<div id="bt2" class="bt">
+							<button class="btn btn-lg btn-warning btn-block"
+								value="remember-me" lang="admin">管理员登录</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			   </c:when>
+			   <c:when  test="${sessionScope.experience==null }">
+				   	<div class="signin">
+				<div class="signin-head">
+					<img src="${pageContext.request.contextPath}/images/test/kid.png"
+						alt="" class="img-circle">
+				</div>
+				<form class="form-signin" role="form">
+					${requestScope.chmod } <input type="text" name="name" id="name"
+						class="form-control" placeholder="用会员编号登录" required autofocus />
+					<input type="password" name="pwd" id="pwd" class="form-control"
+						placeholder="密码" required />
+					<div>
+						<div id="bt1" class="bt">
+							<button class="btn btn-lg btn-warning btn-block" type="submit"
+								lang="user">&nbsp;会员登录&nbsp;</button>
+						</div>
+						<div id="bt2" class="bt">
+							<button class="btn btn-lg btn-warning btn-block"
+								value="remember-me" lang="admin">管理员登录</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			   </c:when>
+			</c:choose>
+
+<c:if test="${sessionScope.admin!=null}">
+<c:redirect url="/admin/navbar1.jsp"/>
+</c:if>
+<c:if test="${sessionScope.experience!=null}">
+<c:redirect url="/experience/navbar.jsp"/></c:if>
+<c:if test="${sessionScope.myuser!=null}">
+<c:redirect url="/member/navbar1.jsp"/>
 </c:if>
 </body>
 </html>
