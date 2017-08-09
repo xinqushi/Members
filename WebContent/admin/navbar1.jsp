@@ -8,6 +8,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/H-ui_v3.0/css/H-ui.min.css"
 	rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css"  rel="stylesheet"/>
 <link
 	href="${pageContext.request.contextPath}/resources/images/icon/H~ui_ICON_1.0.8/iconfont.css"
 	rel="stylesheet" type="text/css" />
@@ -150,6 +151,7 @@
 					<li><a href="#/admin/initpwd.jsp" class="menuItem" title="密码管理"><i></i><i></i><i></i>密码管理</a></li>
 					<li><a href="#/admin/lookmemberinformation.jsp" class="menuItem" title="详细信息"><i></i><i></i><i></i>详细信息</a></li>
 					<li><a href="#/uploading/photowall.jsp" class="menuItem" title="会员照片"><i></i><i></i><i></i>会员照片</a></li>
+					<li><a href="#/member/newschoolInfo.jsp" class="menuItem" title="学校信息"><i></i><i></i><i></i>学校信息</a></li>
 				</ul>
 			</li>
 				

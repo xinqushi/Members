@@ -2113,7 +2113,28 @@ public class MemberController {
 		json.put("returnMap", returnMap);
 		return json.toString();
 	}
-
+	/*
+	 * 功能:根据省份获取学校 作者:左琪 
+	 * 日期2017-8-8
+	 */
+	@ResponseBody
+	@RequestMapping("/getSchoolByPage.action")
+	public String getSchoolByPage(HttpServletRequest request, HttpSession session, String province,int page2) {
+		SchoolDTO schoolDTO = new SchoolDTO();
+		schoolDTO.setProvince(province);
+		schoolDTO.getPage().setCurrentPage(page2);
+		schoolDTO.getPage().setPageSize(8);
+		List<String> list = memberDAO.getSchoolByPage(schoolDTO);
+		int pageCount = schoolDTO.getPage().getTotalPage();
+		String url=province;
+		String str = NavigationBar.sickNavBar(url, 3, page2, pageCount);
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("navbar", str);
+		returnMap.put("list", list);
+		JSONObject json = new JSONObject();
+		json.put("returnMap", returnMap);
+		return json.toString();
+	}
 	/*
 	 * 
 	 * 功能：获取在改学校的会员人数 作者：刘娈莎 日期：2016.12.01
@@ -2364,4 +2385,5 @@ public class MemberController {
 	public Result getAccountLogLast(HttpSession session, HttpServletRequest request, @RequestParam(defaultValue = "0") int type, @RequestParam(defaultValue = "1") int page2, @RequestParam(defaultValue = "10") int  rows) {	
 		return accountLogDAO.getAccountLogLast(type,page2,rows);
 	}
+	
 }

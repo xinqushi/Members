@@ -10,7 +10,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-1.11.1.min.js"></script>		
 <script type="text/javascript" src="${pageContext.request.contextPath}/layer/layer-v2.0/layer/layer.js"></script>
 <style type="text/css">
-.main{width:500px;margin-left:25%;}
+.main{width:500px;margin-left:3%;}
 #info,#tip{font-size:16px;color:red;}
 #info{margin-left:140px;}
 .controls{float:left;}

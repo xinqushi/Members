@@ -36,9 +36,7 @@
 			$.ajaxSetup({
 				async : false
 			});
-			$
-					.post(
-							"${pageContext.request.contextPath}/experience/getCommunicationByEid.action",
+			$.post("${pageContext.request.contextPath}/experience/getCommunicationByEid.action",
 							{
 								eid : eid
 							},

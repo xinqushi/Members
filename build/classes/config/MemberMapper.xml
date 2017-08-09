@@ -245,6 +245,21 @@
 		where 
 			m.id=s.mid and s.mid=#{member.id} and s.pid=0 ORDER BY id DESC;
 	</select>
+	<select id="getSchoolByPage" parameterType="dto.SchoolDTO" resultType="String">
+		SELECT
+			DISTINCT school
+		FROM
+			member
+		WHERE
+			schProId = (
+				SELECT
+					id
+				FROM
+					province
+				WHERE
+					NAME = #{province}
+			)
+	</select>
 	<resultMap type="entity.Summary" id="suminfo">
 		<id property="id" column="id"/>
 		<result property="title" column="title"/>

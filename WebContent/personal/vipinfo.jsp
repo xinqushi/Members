@@ -18,18 +18,15 @@
 <style type="text/css">
 .main {
 	width: 800px;
-	margin-left: 25%;
+	margin-left: 3%;
 }
-
 .img {
 	width: 198px;
 	height: 198px;
 }
-
 .controls {
 	float: left;
 }
-
 #info {
 	margin-left: 60px;
 	color: red;

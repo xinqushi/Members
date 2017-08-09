@@ -17,7 +17,7 @@ $(function(){
 	//第一次点击进来的默认值
 	var checkType="all";
 	var ownerType="所有人";
-	var weekType="all";
+	var weekType="current";
 	var title;
 	var page2=1;
 	/*
@@ -288,11 +288,11 @@ $(function(){
         	<input type="text"  id="scopetext" name="ownerType" value="所有人" disabled="true" style="width: 50px;"/>
 			<input type="button" id="btnscope" value="更改" />
 		</span> &nbsp; &nbsp;
-		<input type="radio" id="weekType-1" name="weekType" value="all" checked>
+		<input type="radio" id="weekType-1" name="weekType" value="all" >
 		<label for="weekType-1">全部</label>&nbsp;
 		<input type="radio" id="weekType-2" name="weekType" value="previous">
 		<label for="weekType-2">向前一周</label>&nbsp;
-		<input type="radio" id="weekType-3" name="weekType" value="current" >
+		<input type="radio" id="weekType-3" name="weekType" value="current" checked>
 		<label for="weekType-3">本周</label>&nbsp;
 		<input type="radio" id="weekType-4" name="weekType" value="next">
 		<label for="weekType-4">向后一周</label>&nbsp; &nbsp;

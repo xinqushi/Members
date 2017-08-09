@@ -70,6 +70,7 @@ public class NavigationBar {
 	 * @param pageCount 总页数
 	 * @return String 导航条字符串
 	 * @author 陈泽帆
+	 * 日期：2017-8-9  左琪  修改了该方法，将a标签中的lang属性修改，删除了page名
 	 */
 	//有病分页导航条
 	public static String sickNavBar(String url,int btnCount,int page,int pageCount){
@@ -94,25 +95,34 @@ public class NavigationBar {
 		if(start<=0){
 			start=1;
 		}
-		str.append("<a href='#' class='nav' lang='"+url+mark+"page="+1+"'>");
+		//str.append("<a href='#' class='nav-btn' lang='"+url+mark+"page="+1+"'>");
+		str.append("<a href='#' class='nav-btn' lang='"+url+mark+1+"'>");
+		str.append("<button type='button'>");
 		str.append("首页");
+		str.append("</button>");
 		str.append("</a>");
 		str.append("&nbsp;&nbsp;");
 		for(int i=start;i<=end;i++){
-			str.append("<a href='#' class='nav' lang='"+url+mark+"page="+i+"'>");
+			str.append("<a href='#' class='nav-btn' lang='"+url+mark+i+"'>");
 			if(i==page){
-			str.append("<font color='red'><b>");
-			str.append(i);
-			str.append("</b></font>");
+				str.append("<button type='button'  id='btn-currentpage'>");
+				str.append("<font color='red'><b>");
+				str.append(i);
+				str.append("</b></font>");
+				str.append("</button>");
 			}
 			else {
+				str.append("<button type='button'>");
 				str.append(i);
+				str.append("</button>");
 			}
 			str.append("</a>");
 			str.append("&nbsp;&nbsp;");			
 		}
-		str.append("<a href='#' class='nav' lang='"+url+mark+"page="+pageCount+"'>");
+		str.append("<a href='#' class='nav-btn' lang='"+url+mark+pageCount+"'>");
+		str.append("<button type='button'>");
 		str.append("尾页");
+		str.append("</button>");
 		str.append("</a>");
 		str.append("&nbsp;&nbsp;");
 		str.append("共"+pageCount+"页");

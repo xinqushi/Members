@@ -94,7 +94,7 @@ $(function(){
 		$(".wrap").load("${pageContext.request.contextPath}/personal/mysummarys.jsp");
 	});
 	$("[title='学校信息']").click(function(){
-		$(".wrap").load("${pageContext.request.contextPath}/member/schoolInfo.jsp");
+		$(".wrap").load("${pageContext.request.contextPath}/member/newschoolInfo.jsp");
 	});
 	taggleWriteAndModify();
 	writeclick();
@@ -212,7 +212,8 @@ $(document).ready(function(){
             <div id="ad_setting" class="ad_setting">
                 <a class="ad_setting_a" href="javascript:; ">${myuser.member.name}</a>
                 <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
-                    <li class="ad_setting_ul_li"  onclick="personal()"> <a href="javascript:;"><i class="icon-user glyph-icon"></i>个人中心</a> </li>
+                    <!-- 将右上角个人中心的按钮去掉
+                    <li class="ad_setting_ul_li"  onclick="personal()"> <a href="javascript:;"><i class="icon-user glyph-icon"></i>个人中心</a> </li> -->
                     <li class="ad_setting_ul_li" onclick="exit()"> <a href="javascript:;"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
                 </ul>
                 <img class="use_xl" src="${pageContext.request.contextPath}/navbar/images/right_menu.png" />

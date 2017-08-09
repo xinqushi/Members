@@ -30,20 +30,19 @@ $(function(){
 	var years=time.getFullYear(); 
 	var page = 1;
 	$.ajaxSetup({async:false});
-
+	$("#monthpicker").val(years+"-"+month);
 	getDate(years,month,page);
 	$('#monthpicker').monthpicker({
         years: [2014,2015,2016, 2017, 2018, 2019, 2020],
         topOffset: 6,
         onMonthSelect: function(m, y) {
           //console.log('Month: ' + m + ', year: ' + y);
-          month=m+1;
+          month=m+1; 
           years=y;
-          //alert(month+":"+years);
+          $("#monthpicker").val(years+"-"+month);
           getDate(years,month,page);
         }
     });
-	
 	
 	function getDate(years,month,page){
 		$.ajaxSetup({async:false});
@@ -123,7 +122,7 @@ $(function(){
 	</div>
 	<div align="center" >
 	<h3>月入会员</h3>
-	<p>年月份选择：<a href="#monthpicker" id="monthpicker"></a></p>
+	<p>年月份选择：<input type="text" class="input" id="monthpicker" readonly> </p>
 	</div>
 	<div class="panel-primary">
 		<table class="table table-border table-bg table-bordered radius">
@@ -137,7 +136,7 @@ $(function(){
 					<th>加入时间</th>
 					<th>助教</th>
 					<th>首付</th>
-					<td>月供</td>
+					<th>月供</th>
 				</tr>
 			</thead>
 			<tbody id="tbody" class='text-c'></tbody>
