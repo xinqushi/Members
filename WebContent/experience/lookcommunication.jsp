@@ -59,7 +59,7 @@
 														commentString += "<span class='commcontendivcodsins'>"
 																+ contenttime
 																+ "</span>";
-														commentString += "<a class='icon-delete-small' href='javascript:;' lang="+data[i].id+"><i class='Hui-iconfont'>&#xe6e2;</i></a>";
+														//commentString += "<a class='icon-delete-small' href='javascript:;' lang="+data[i].id+"><i class='Hui-iconfont'>&#xe6e2;</i></a>";
 														commentString += "<div class='commcontendivcodd'>";
 														commentString += "<div class='contentdiv'>"
 																+ content
@@ -84,7 +84,7 @@
 							});
 		}
 		//删除沟通信息
-		function delComment() {
+		/* function delComment() {
 			$(".icon-delete-small")
 					.click(
 							function() {
@@ -105,7 +105,7 @@
 													});
 								}
 							});
-		}
+		} */
 
 	});
 </script>
@@ -113,7 +113,7 @@
 <input type="hidden" name="id" value="${param.id }">
 <input type="hidden" name="name" value="${param.name }">
 <body style="background-color: #EEEEEE;" class="aa">
-	<div class="commcontendiv" id="commcontendiv">
+	<div class="commcontendiv" id="commcontendiv" style="margin-left:0px;">
 		<div class="commcontendivtd">
 			<span class="commcontendivtdspan" style="padding-left: 130px;">与【${param.name }】体验者的沟通信息..</span>
 		</div>
