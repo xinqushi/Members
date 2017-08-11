@@ -47,8 +47,8 @@ $(function(){
           getDate(years,month,page);
         }
     });
-	
-	function getDate(years,month,page){
+	   
+	function  getDate(years,month,page){
 		$.ajaxSetup({async:false});
 		$.post("${pageContext.request.contextPath}/experience/getMemberByMonth.action",{years:years,month:month,page:page},function(data){
 			drawTable(data.data);
