@@ -166,4 +166,8 @@ public class MemberDAO {
 //		return Result.ok(list, pageInfo.getPageNum(), pageInfo.getPages());
 		return memberMapper.getSchoolByPage(schoolDTO);
 	}	
+	public User getMemberInfoByName(String mname){
+		System.out.println(memberMapper.getMemberInfoByName(mname));
+		return memberMapper.getMemberInfoByName(mname);
+	}
 }

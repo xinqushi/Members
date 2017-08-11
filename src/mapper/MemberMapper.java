@@ -67,4 +67,6 @@ public interface MemberMapper {
 	public List<CostDTO> getMemberCost(@Param("type") int type);
 	
 	public List<String> getSchoolByPage(SchoolDTO schoolDTO);
+	
+	public User getMemberInfoByName(String mname);
 }

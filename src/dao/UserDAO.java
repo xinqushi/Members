@@ -97,4 +97,8 @@ public class UserDAO {
 	public List<User> getMemberInfo(User user) {
 		return userMapper.getMemberInfo(user);
 	}
+	
+	public User getUserManageinfo(User user){
+		return userMapper.getUserManageinfo(user);
+	}
 }

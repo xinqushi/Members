@@ -70,6 +70,7 @@ $(function(){
 		$(".mycell").dblclick(function(data){
 			var authority;
 			$.post("${pageContext.request.contextPath}/admin/checkAdminAuthorith.action",function(data){
+				alert(data)
 				if(data == 1)
 				{
 					authority=data;

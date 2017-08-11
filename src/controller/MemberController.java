@@ -85,6 +85,7 @@ import entity.Summary;
 import entity.User;
 import entity.UserInfo;
 import tools.DateFormatUtils;
+import tools.JsonUtils;
 import tools.MD5SaltUtils;
 import tools.NavigationBar;
 import tools.Paging;
@@ -2384,6 +2385,16 @@ public class MemberController {
 	@RequestMapping(value = "/getAccountLogLast")
 	public Result getAccountLogLast(HttpSession session, HttpServletRequest request, @RequestParam(defaultValue = "0") int type, @RequestParam(defaultValue = "1") int page2, @RequestParam(defaultValue = "10") int  rows) {	
 		return accountLogDAO.getAccountLogLast(type,page2,rows);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getMemInfoByName.action")
+	public String getMemInfoByName(String mname){
+		User user = memberDAO.getMemberInfoByName(mname);
+		System.out.println(user);
+		String json = JsonUtils.objectToJson(user);
+		System.out.println(json);
+		return json;
 	}
 	
 }

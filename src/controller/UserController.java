@@ -939,6 +939,21 @@ public class UserController {
 	public String checkUserSession(HttpSession session ) {
 		return VerifyIdentity.verifyUser(session) != null ? "1" : "0";
 	}
+	/*
+	 *  描述：getUserByPage.action这个action的修改版   不确定其他地方是否用到 所以新建一个action完成
+	 *  功能：实现会员信息管理页面的修改   主要修改为使用pinyin工具类实现展示会员信息和修改查看等功能
+	 *  作者：熊杰     	日期：2017-08-08
+	 */
+	@RequestMapping("/getUserTest.action")
+	@ResponseBody
+	public User getUserTest( User user ){
+		user = userDAO.getUserManageinfo(user);
+		// 设置时间格式
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Member member = user.getMember();
+		member.setFormatGraduateDate(df.format(member.getGraduateDate()));
+		return user;
+	}
 	
 	
 }

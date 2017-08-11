@@ -80,7 +80,42 @@
 	<select id="getMemByName" parameterType="String" resultType="entity.Member">
 		select * from member where name=#{name}
 	</select>
+	<!--
+		 * 创建：通过会员名字获取会员基础设置信息
+		 * 作者：苏铭
+		 * 日期：2017-08-07
+		 -->
 	
+	      
+	<select id="getMemberInfoByName" parameterType="String" resultMap="nameinfo">
+	SELECT
+		a.realname AS adname,
+		m.summaryflag AS summaryflag,
+		u.id    AS uid,
+		u.`name` AS uname,
+		m.id	AS mid,
+		m.`name` AS mname
+	FROM
+		admin a,
+		member m,
+		`user` u
+	WHERE
+		m.`name` = #{mname}
+		AND m.uid = u.id
+		AND a.id = m.aid
+	</select>
+	<resultMap type="entity.User" id="nameinfo">
+              <result column="uname" property="name" />
+              <result column="uid" property="id"/>
+              <association property="member" javaType="entity.Member">
+              	  <result column="mid" property="id"/>
+              	  <result column="mname" property="name"/>
+	              <result column="summaryflag" property="summaryflag"/>
+	          </association>
+              <association property="admin" javaType="entity.Admin">
+              		<result column="adname" property="realname" />
+              </association>
+    </resultMap>
 	<!--
 	 * 修改：添加出生地seat_provid
 	 * 作者：王德斌

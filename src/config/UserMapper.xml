@@ -552,4 +552,35 @@
 		</collection>
 
 	</resultMap>
+	<!-- 信息管理页面 -->
+		<select id="getUserManageinfo" resultMap="manageUser" parameterType="entity.User">
+			SELECT
+				u.id id,
+				u. NAME name,
+				m. NAME realName,
+			  	m.id mid,
+				m.school school,
+				m.mobile,
+				m.company company,
+				m.graduateDate graduateDate,
+				m.abnormal abnormal
+			FROM
+				member m INNER JOIN user u ON m.uid = u.id where m.name = #{name}
+		</select>
+	
+	<!--  -->
+	<resultMap type="entity.User" id="manageUser">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+			<collection property="member" ofType="entity.Member">
+			<id column="mid" property="id"/>
+			<result column="realName" property="name"/>
+			<result column="school" property="school"/>
+			<result column="company" property="company"/>
+			<result column="mobile" property="mobile"/>
+			<result column="student" property="student"/>
+			<result column="graduateDate" property="graduateDate"/>
+			<result column="abnormal" property="abnormal"/>
+		</collection>
+	</resultMap>
 </mapper>
