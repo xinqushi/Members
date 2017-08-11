@@ -29,17 +29,13 @@ $(function(){
 	var month=time.getMonth()+1;
 	var years=time.getFullYear(); 
 	var page = 1;
-	var yearsArray = new Array(5);
-	for(i= 0;i<yearsArray.length;i++){
-		yearsArray[i] = Number(years) - i;
-	}
 	$.ajaxSetup({async:false});
 	$("#monthpicker").val(years+"-"+month);
 	getDate(years,month,page);
 	$('#monthpicker').monthpicker({
-     	years:yearsArray,
+        years: [2014,2015,2016, 2017, 2018, 2019, 2020],
         topOffset: 6,
-        onMonthSelect: function(m,y) {
+        onMonthSelect: function(m, y) {
           //console.log('Month: ' + m + ', year: ' + y);
           month=m+1; 
           years=y;
@@ -47,8 +43,8 @@ $(function(){
           getDate(years,month,page);
         }
     });
-	
-	function getDate(years,month,page){
+	   
+	function  getDate(years,month,page){
 		$.ajaxSetup({async:false});
 		$.post("${pageContext.request.contextPath}/experience/getMemberByMonth.action",{years:years,month:month,page:page},function(data){
 			drawTable(data.data);
