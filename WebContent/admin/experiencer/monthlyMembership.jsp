@@ -29,13 +29,17 @@ $(function(){
 	var month=time.getMonth()+1;
 	var years=time.getFullYear(); 
 	var page = 1;
+	var yearsArray = new Array(5);
+	for(i= 0;i<yearsArray.length;i++){
+		yearsArray[i] = Number(years) - i;
+	}
 	$.ajaxSetup({async:false});
 	$("#monthpicker").val(years+"-"+month);
 	getDate(years,month,page);
 	$('#monthpicker').monthpicker({
-        years: [2014,2015,2016, 2017, 2018, 2019, 2020],
+     	years:yearsArray,
         topOffset: 6,
-        onMonthSelect: function(m, y) {
+        onMonthSelect: function(m,y) {
           //console.log('Month: ' + m + ', year: ' + y);
           month=m+1; 
           years=y;
