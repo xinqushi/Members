@@ -30,7 +30,7 @@ $(function(){
 <a href="${pageContext.request.contextPath}/admin/checkimage.jsp">图片审核</a> 
 <a href="${pageContext.request.contextPath}/admin/fee.jsp">费用管理</a>
 <a href="${pageContext.request.contextPath}/admin/amount.jsp">费用统计</a>
-<a href="${pageContext.request.contextPath}/admin/initpwd.jsp">密码管理</a>
+<%-- <a href="${pageContext.request.contextPath}/admin/initpwd.jsp">密码管理</a> --%>
 <a href="${pageContext.request.contextPath}/memberpay/Direction.action">利息市场</a>
 <a href="${pageContext.request.contextPath}/admin/history.jsp">来访记录</a>
 <a href="${pageContext.request.contextPath}/admin/notice.jsp">公告管理</a>

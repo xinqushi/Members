@@ -10323,8 +10323,7 @@ $(document).ready(function() {
 						city: []
 					}]
 				}
-			},
-			{
+			},{
 				region: {
 					name: '国外',
 					code: '83',

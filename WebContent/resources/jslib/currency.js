@@ -203,3 +203,22 @@ function clickRows() {
 		$(this).addClass("info");
 	});
 }
+
+/**
+ * 传入字母到和路径获取名字
+ */
+function getName(letter,className,url){
+	var name=null;
+	$("#tabsC").html("");
+	$.post(url,{letter:letter},function(data){
+		$("#tabsC").append("<ul>")
+		for(var i=0;i<data.length;i++){
+			//$("#tabsC").append("<li><a href=${pageContext.request.contextPath}/member/setMember.action?name=" + data[i] + "><span>" + data[i] + "</span></a></li>");	
+			$("#tabsC").append("<li><a href='javascript:void(0)' lang='" + data[i].id + "'value='" + data[i].name + "' class='" + className + "'><span>" + data[i].name + "</span></a></li>");
+			
+		}
+		$("#tabsC").append("</ul>")
+	,"json"})
+	
+}
+

@@ -42,10 +42,10 @@ $(function(){
 				$("#main-content").load("${pageContext.request.contextPath}/ondutylog/toCheck.action");
 				$.layer.close();
 			});
-	$("[title='密码管理']").click(function()
+	/* $("[title='密码管理']").click(function()
 			{
 				$("#main-content").load("${pageContext.request.contextPath}/admin/initpwd.jsp");
-			});
+			}); */
 	$("[title='费用管理']").click(function()
 			{
 				$("#main-content").load("${pageContext.request.contextPath}/admin/fee.jsp");

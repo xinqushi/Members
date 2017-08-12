@@ -148,7 +148,7 @@
 					<li><a href="#/admin/assistantsetup.jsp" class="menuItem" title="会员基础设置"><i></i><i></i><i></i>基础设置</a></li>
 					<li><a href="#/admin/membercommunication.jsp" class="menuItem" title="沟通信息"><i></i><i></i><i></i>沟通信息</a></li>
 					<li><a href="#/admin/checkimage1.jsp" class="menuItem" title="图片管理"><i></i><i></i><i></i>图片管理</a></li>
-					<li><a href="#/admin/initpwd.jsp" class="menuItem" title="密码管理"><i></i><i></i><i></i>密码管理</a></li>
+					<!-- <li><a href="#/admin/initpwd.jsp" class="menuItem" title="密码管理"><i></i><i></i><i></i>密码管理</a></li> -->
 					<li><a href="#/admin/lookmemberinformation.jsp" class="menuItem" title="详细信息"><i></i><i></i><i></i>详细信息</a></li>
 					<li><a href="#/uploading/photowall.jsp" class="menuItem" title="会员照片"><i></i><i></i><i></i>会员照片</a></li>
 					<li><a href="#/member/newschoolInfo.jsp" class="menuItem" title="学校信息"><i></i><i></i><i></i>学校信息</a></li>
