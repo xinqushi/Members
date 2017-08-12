@@ -10322,6 +10322,28 @@ $(document).ready(function() {
 						city: []
 					}]
 				}
+			},{
+				region: {
+					name: '国外',
+					code: '83',
+					state: [{
+						name: '澳门半岛',
+						code: '01',
+						city: []
+					}, {
+						name: '氹仔岛',
+						code: '02',
+						city: []
+					}, {
+						name: '路环岛',
+						code: '03',
+						city: []
+					}, {
+						name: '路氹城',
+						code: '04',
+						city: []
+					}]
+				}
 			}]
 		}
 	}
