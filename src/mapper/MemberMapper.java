@@ -69,4 +69,6 @@ public interface MemberMapper {
 	public List<String> getSchoolByPage(SchoolDTO schoolDTO);
 	
 	public User getMemberInfoByName(String mname);
+	
+	public List<Member> getAllIdAndName();
 }

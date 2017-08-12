@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, 
+Inc.//DTD JSP Tag Library 1.2//EN" 
+"web-jsptaglibrary_1_2.dtd" >  
+<taglib>  
+  <tlib-version>1.0</tlib-version>  
+  <jsp-version>1.2</jsp-version>  
+  <short-name>mytag</short-name>  
+  <uri>hello</uri>  
+  <tag>  
+    <name>hello</name>  
+    <tag-class>test.Hello</tag-class>  
+    <body-content>empty</body-content>  
+  </tag>
+  <tag>
+  	<name>num</name>  
+    <tag-class>test.NumToName</tag-class>  
+    <body-content>empty</body-content>
+  </tag>
+  <tag>
+  	<name>num2</name>  
+    <tag-class>test.NumToName2</tag-class>  
+    <body-content>empty</body-content>
+    
+    <attribute>
+    	<name>num</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    	<name>className</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+  <tag>
+  	<name>showNum</name>  
+    <tag-class>test.ShowNum</tag-class>  
+    <body-content>empty</body-content>
+    
+    <attribute>
+    	<name>className1</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    	<name>className2</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    	<name>url</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib> 

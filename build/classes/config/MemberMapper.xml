@@ -266,6 +266,9 @@
 	<select id="getAll" resultType="entity.Member">
 		select * from member
 	</select>
+	<select id="getAllIdAndName" resultType="entity.Member">
+		select id,name from member
+	</select>
 	<select id="getSumAll" parameterType="entity.Summary" resultMap="suminfo">
 		select
 			s.id id,

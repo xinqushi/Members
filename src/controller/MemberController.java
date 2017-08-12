@@ -2011,19 +2011,18 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getAllNames.action")
-	public ArrayList<String> transformName(Character letter) {
-		List<Member> list = memberDAO.getAll();
-		ArrayList<String> plist = new ArrayList<String>();
+	public List<Member> transformName(Character letter) {
+		List<Member> list = memberDAO.getAllIdAndName();
+		List<Member> returnlist = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			if (letter == tools.PinYinUtil.getPinYin(list.get(i).getName()).charAt(0))
-				plist.add(list.get(i).getName());
+				returnlist.add(list.get(i));
 		}
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("list", plist);
+		returnMap.put("list", returnlist);
 		JSONObject json = new JSONObject();
 		json.put("returnMap", returnMap);
-		// return json.toString();
-		return plist;
+		 return returnlist;
 	}
 
 	/*

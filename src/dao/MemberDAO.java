@@ -54,6 +54,10 @@ public class MemberDAO {
 	public List<Member> getAll() {
 		return memberMapper.getAll();
 	}
+	
+	public List<Member> getAllIdAndName(){
+		return memberMapper.getAllIdAndName();
+	}
 
 	public List<Summary> getSumAll(Summary summary) {
 		return memberMapper.getSumAll(summary);

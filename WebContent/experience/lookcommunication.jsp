@@ -84,7 +84,7 @@
 							});
 		}
 		//删除沟通信息
-		/* function delComment() {
+		function delComment() {
 			$(".icon-delete-small")
 					.click(
 							function() {
