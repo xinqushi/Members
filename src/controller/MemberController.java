@@ -2018,11 +2018,11 @@ public class MemberController {
 			if (letter == tools.PinYinUtil.getPinYin(list.get(i).getName()).charAt(0))
 				returnlist.add(list.get(i));
 		}
-		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+	/*	HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("list", returnlist);
 		JSONObject json = new JSONObject();
-		json.put("returnMap", returnMap);
-		 return returnlist;
+		json.put("returnMap", returnMap);*/
+		return returnlist;
 	}
 
 	/*
