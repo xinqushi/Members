@@ -23,6 +23,7 @@
 $(function(){
 	getMeb();
 	getCover();
+
 	function getCover() {
 		$.ajaxSetup({async: false});
 		$.post("${pageContext.request.contextPath}/picture/getCover.action", {
@@ -42,6 +43,68 @@ $(function(){
 			}	
 		});
 	}
+
+    //编辑资料
+    $(".btn").click(function(){
+        $("#name").html("<input type='text' placeholder='必填项' value='${myuser.member.name}' name='name' >");
+        $("#school").html("<input type='text' placeholder='必填项' value='${myuser.member.school}' name='school'> ");
+        $("#company").html("<input type='text' placeholder='必填项' value='${myuser.member.company}' name='company'> ");
+        $("#mobile").html("<input type='text' placeholder='必填项' value='${myuser.member.mobile}' name='mobile'> ");
+        $("#graduateDate").html("<input type='text' placeholder='必填项' value="+$("#graduateDate").text()+" name='graduateDate'> ");
+
+        // 下拉列表
+        $("#born_place").html("<td><select id = 'bron_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.born.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+        $("#now_place").html("<td><select id = 'now_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.province.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+        $("#school_place").html("<td><select id = 'school_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.school.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+
+
+        $("#btn").html("<input class='btn' type='button' value='保存信息' id='save'>");
+        $("#save").click(function(){
+            var name=$.trim($("[name='name']").val());
+            var mobile=$.trim($("[name='mobile']").val());
+            var reg=/[\u4e00-\u9fa5]+/;
+            var regTel=/^0[\d]{2,3}-[\d]{7,8}$/;
+            var regMobile = /^0?1[3|4|5|8|7][0-9]\d{8}$/;
+            var regDate=/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/;
+            if (name=="" || mobile==""){
+                $("#info").html("真实姓名和移动电话不能为空");
+                return false;
+            }
+            var tflag = regTel.test(mobile);
+            var mflag = regMobile.test(mobile);
+            if (!(tflag||mflag)){
+                $("#info").html("移动电话输入不合法");
+                return false;
+            }
+            if(!regDate.test($("[name='graduateDate']").val()))
+            {
+                $("#info").html("日期输入不合法,例: 2000-07-15");
+                return false;
+            }
+            $.ajaxSetup({async: false});
+            $.post("${pageContext.request.contextPath}/member/updateMember1.action",{"id":$("#id").val(),"uid":$("#uid").val(),"name":name,
+                "company":$("[name='company']").val(),"mobile":mobile,"sex":$("#sex").text(),"school":$("[name='school']").val(),
+                "graduateDate":$("[name='graduateDate']").val(), "provid": $("#now_city option:selected").val(), "schProId": $("#school_city option:selected").val(), "seat_provid": $("#bron_city option:selected").val()},function(data){
+                if(data==1)
+                {
+                    layer.msg('保存成功',{
+                        icon:1,
+                        time:600,
+                        end: function(){
+                            // 保存成功往这里走  http://localhost:8080/member/navbar1.jsp
+                            <%--location.href="${pageContext.request.contextPath}/personal/navbar.jsp";--%>
+                            location.href="${pageContext.request.contextPath}/member/navbar1.jsp";
+                        }
+                    })
+                }
+                else{
+                    layer.msg('登录过期，请重新登录',{
+                        icon:0
+                    })
+                }
+            });
+        });
+    });
 });
 </script>
 </head>
@@ -93,39 +156,60 @@ ${myuser.member.admin.realname }
 		</tr>
 		<tr>
 			<td>身份证号:</td>
-			<td id="province">${myuser.userInfo.idNo}</td>
+			<td id="id_card">${myuser.userInfo.idNo}</td>
 		</tr>
 		<tr>
 			<td>QQ号码:</td>
-			<td id="province">${myuser.userInfo.qqNo}</td>
+			<td id="qq">${myuser.userInfo.qqNo}</td>
 		</tr>
 		<tr>
 			<td>支付宝账号:</td>
-			<td id="province">${myuser.userInfo.payAccount}</td>
+			<td id="pay_treasure">${myuser.userInfo.payAccount}</td>
 		</tr>
 		<tr>
 			<td>家庭联系人:</td>
-			<td id="province">${myuser.userInfo.contactName}</td>
+			<td id="family">${myuser.userInfo.contactName}</td>
 		</tr>
 		<tr>
 			<td>家庭联系人手机:</td>
-			<td id="province">${myuser.userInfo.contactMobile}</td>
+			<td id="family_tel">${myuser.userInfo.contactMobile}</td>
 		</tr>
 		<tr>
 			<td>与家庭联系人关系:</td>
-			<td id="province">${myuser.userInfo.relation}</td>
+			<td id="family_relation">${myuser.userInfo.relation}</td>
 		</tr>
 		<tr>
 			<td>本人收件地址:</td>
-			<td id="province">${myuser.userInfo.address}</td>
+			<td id="receipt">${myuser.userInfo.address}</td>
+		</tr>
+
+
+		<%--
+			曾小晨
+			2017-08-21 增加了会员地区的修改
+		--%>
+		<tr>
+			<td>出生地:</td>
+			<input type="hidden" value="${place.born.id}">
+			<td id="born_place">${place.born.name}</td> <%-- seat_provid --%>
+		<tr>
+			<td>现在地:</td>
+			<input type="hidden" value="${place.province.id}">
+			<td id="now_place">${place.province.name}</td><%-- provid --%>
+		</tr>
+		<tr>
+			<td>学校所在地:</td>
+			<input type="hidden" value="${place.school.id}">
+			<td id="school_place">${place.school.name}</td>
 		</tr>
 		<tr class="assist"></tr>
 	</table>
-	<!-- 去掉编辑功能
-		    <div class="controls" id="btn">  
+			<!-- 去掉编辑功能 -->
+			<%-- 曾小晨：打开编辑功能 --%>
+		    <div class="controls" id="btn">
                 <input class="btn" type="button" value="编辑信息">
             </div>
- 	 -->
+
 		<div id="info" class="controls"></div>
 	</td>
 	<td>

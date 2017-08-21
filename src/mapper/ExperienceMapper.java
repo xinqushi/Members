@@ -29,10 +29,10 @@ public interface ExperienceMapper {
 	public List<Experience> getExperienceByPinyin();
 
 	public List<Experience> getExperienceList(@Param("status") int status, @Param("aId") int aId,
-			@Param("qq") String qq);
+                                              @Param("qq") String qq);
 
 	// 获取每月加入VIP会员信息
-	public List<Member> getMemberByMonth(@Param("years") int years,@Param("month") int month);
+	public List<Member> getMemberByMonth(@Param("years") int years, @Param("month") int month);
 
 	public Experience getLastOne();
 

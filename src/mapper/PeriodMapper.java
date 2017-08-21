@@ -19,7 +19,7 @@ public interface PeriodMapper {
 	public double getFirst(int mid);
 	public double getLast(int mid);
 	public double getMonthly(int mid);
-	public double getRestAmountByMid(Map<String,Object> map);
+	public double getRestAmountByMid(Map<String, Object> map);
 	public void deleteByMid(int id);
 	public List<Period> getSettlement(int mid);
 	public List<Period> getAllByMid(int mid);

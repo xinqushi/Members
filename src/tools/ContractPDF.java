@@ -139,7 +139,7 @@ public class ContractPDF {
        BaseFont bf = null;
        Font fontChinese = null;
        try {
-           String fontPath=request.getServletContext().getRealPath("") +"font" + java.io.File.separator + "1.TTF";
+           String fontPath=request.getServletContext().getRealPath("") +"font" + File.separator + "1.TTF";
            bf = BaseFont.createFont(fontPath,
                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
            fontChinese = new Font(bf, 12, Font.NORMAL);

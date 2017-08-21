@@ -35,8 +35,8 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	getMeb();
-	getCover();
+	getMeb(); // 得到当前会员的小助手信息
+	getCover(); // 得到用户封面
 	function getCover(){
 		$.ajaxSetup({async: false});
 		$.post("${pageContext.request.contextPath}/picture/getCover.action",{"id":$("#uid").val()},function(data){
@@ -128,6 +128,13 @@ $(function(){
 		$("#company").html("<input type='text' placeholder='必填项' value='${myuser.member.company}' name='company'> ");
 		$("#mobile").html("<input type='text' placeholder='必填项' value='${myuser.member.mobile}' name='mobile'> ");
 		$("#graduateDate").html("<input type='text' placeholder='必填项' value="+$("#graduateDate").text()+" name='graduateDate'> ");
+
+
+        $("#born_place").html("<td><select id = 'bron_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.born_place.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+        $("#now_place").html("<td><select id = 'now_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.now_place.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+        $("#school_place").html("<td><select id = 'school_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.school_place.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
+
+
 		$("#btn").html("<input class='btn' type='button' value='保存信息' id='save'>");
 		$("#save").click(function(){
 			var name=$.trim($("[name='name']").val());
@@ -154,14 +161,16 @@ $(function(){
 			$.ajaxSetup({async: false});
 			$.post("${pageContext.request.contextPath}/member/updateMember1.action",{"id":$("#id").val(),"uid":$("#uid").val(),"name":name,
 				"company":$("[name='company']").val(),"mobile":mobile,"sex":$("#sex").text(),"school":$("[name='school']").val(),
-				"graduateDate":$("[name='graduateDate']").val()},function(data){
+				"graduateDate":$("[name='graduateDate']").val(), "provid": $("#now_city option:selected").val(), "schProId": $("#school_city option:selected").val(), "seat_provid": $("#bron_city option:selected").val()},function(data){
 					if(data==1)
 						{
 							layer.msg('保存成功',{
 								icon:1,
 								time:600,
 								end: function(){
-								       //location.href="${pageContext.request.contextPath}/personal/navbar.jsp";
+								    	// 保存成功往这里走  http://localhost:8080/member/navbar1.jsp
+								       <%--location.href="${pageContext.request.contextPath}/personal/navbar.jsp";--%>
+								       location.href="${pageContext.request.contextPath}/member/navbar1.jsp";
 							    }
 							})
 						}
@@ -225,12 +234,33 @@ $(function(){
 							<td id=""><fmt:formatDate value="${myuser.member.time}"
 									pattern="yyyy-MM-dd" /></td>
 						</tr>
+						<%--
+							修改人：曾小晨
+							修改时间：2017-08-20
+							修改内容：增加了所在地的修改，展示出生地等信息
+						--%>
+						<tr>
+							<td>出生地:</td>
+							<input type="hidden" value="${place.born_place.id}">
+							<td id="born_place">${place.born_place.name}</td> <%-- seat_provid --%>
+						<tr>
+							<td>现在地:</td>
+							<input type="hidden" value="${place.now_place.id}">
+							<td id="now_place">${place.now_place.name}</td><%-- provid --%>
+						</tr>
+						<tr>
+							<td>学校所在地:</td>
+							<input type="hidden" value="${place.school_place.id}">
+							<td id="school_place">${place.school_place.name}</td>
+						</tr>
 						<tr class="assist"></tr>
-					</table> <!-- 去掉编辑功能
-		    <div class="controls" id="btn">  
+					</table>
+					<!-- 去掉编辑功能 -->
+					<%-- 恢复编辑功能 --%>
+		    <div class="controls" id="btn">
                 <input class="btn" type="button" value="编辑信息">
             </div>
- 	 -->
+
 					<div id="info" class="controls"></div>
 				</td>
 				<td>

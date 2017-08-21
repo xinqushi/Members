@@ -5,13 +5,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -20,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.*;
+import entity.*;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -32,36 +28,8 @@ import org.zefer.html.doc.s;
 
 import com.itextpdf.text.log.SysoLogger;
 
-import dao.AccountLogDAO;
-import dao.ExperienceDAO;
-import dao.MemberDAO;
-import dao.PeriodDAO;
-import dao.PictureDAO;
-import dao.SummaryDAO;
-import dao.UserDAO;
-import dao.UserInfoDAO;
-import dao.VisitDAO;
 import dto.UserDTO;
-import entity.AccountLog;
-import entity.Experience;
-import entity.Member;
-import entity.QueryType;
-import entity.StatusCode;
-import entity.Summary;
-import entity.SystemInfo;
-import entity.User;
-import entity.UserInfo;
-import entity.Visitor;
-import tools.Authentication;
-import tools.ContractPDF;
-import tools.GeneratePDF;
-import tools.HttpRequestDeviceUtils;
-import tools.MD5SaltUtils;
-import tools.NavigationBar;
-import tools.Paging;
-import tools.ReturnJson;
-import tools.SummaryTitle;
-import tools.VerifyIdentity;
+import tools.*;
 
 @Controller
 @RequestMapping("/user")
@@ -89,6 +57,10 @@ public class UserController {
 	int sumpageSize = 9;
 	@Resource
 	GeneratePDF generatePDF;
+
+	// 修改的
+	@Resource
+	ProvinceDAO provinceDAO;
 
 	/*
 	 * 修改： 修改的内容：getuser.action改成getUser.action 作者：刘文启 最后修改:2016-04-19
@@ -477,8 +449,11 @@ public class UserController {
 			return "1";
 		}
 		}
+//------------------------------------------------------------------------------------------------------------------------
+		// 增加两个字段
 		// 不是体验者,继续处理会员登录
 		// 以是否通过审核（member.flag）为标准，判断是否完成信息补全
+		Map place_map = new HashMap();
 		String salt = userDAO.getSalt(user);
 		//将salt放入session  在判断初始密码是否是12345678时有用到
 		session.setAttribute("salt", salt);	
@@ -488,18 +463,21 @@ public class UserController {
 			int root = user.getRoot();
 			session.setAttribute("Root", 0);
 			List<User> memberlist = userDAO.getMemberInfo(user);
-			// user表,member表两个表中有有能链接的数据
-			
 			if (memberlist.size() != 0) {
 				user = memberlist.get(0);
+				// 得到学校的地区名字
+				Province school_place = provinceDAO.getProvinceName(user.getMember().getSchProId());
+				place_map.put("school_place", school_place);
+
+
 				if (user.getMember().isFlag()) {
 					session.setAttribute("Root", 1);
 				}
 				visitor.setIdentityType(1);
 				visitor.setMeid(user.getMember().getId());
-				System.out.println(visitor);
+//				System.out.println(visitor);
 				visitDAO.addvisit(visitor);
-				System.out.println(visitor);
+//				System.out.println(visitor);
 				HashMap<String, Visitor> map = (HashMap<String, Visitor>) application.getAttribute("online");
 				map.put(session.getId(), visitor);
 				session.setAttribute("Visitor", visitor);
@@ -510,13 +488,13 @@ public class UserController {
 					if (user.getMember().isFlag()) {
 						int mid = user.getMember().getId();
 						session.setAttribute("Root", 1);
+						// 通过用户的用户名和密码得到数据库中完整的用户信息
 						user.setFirst(periodDAO.getFirst(mid));
 						user.setMonthly(periodDAO.getMonthly(mid));
 						user.setSum(periodDAO.getSum(mid));
 						user.setAllMonth(periodDAO.getAllMonthByMid(mid) - 2);
 						user.setLast(periodDAO.getLast(mid));
 						user.setDelayMonth(periodDAO.getDelayMonthyByMid(mid));
-
 					}
 				}
 			}
@@ -546,6 +524,24 @@ public class UserController {
 				e.printStackTrace();
 			}
 
+			// 得到所有的城市进行前端展示
+			List<Province> citys = provinceDAO.getProvinceAll();
+			session.setAttribute("citys", citys);
+
+
+			/**
+			 * 根据用户的地区id得到地区名字：曾小晨  2017-08-21
+ 			 */
+			// 得到所在地
+			Province now_place = provinceDAO.getProvinceName(user.getMember().getProvid());
+			// 得到出生地
+			Province born_place = provinceDAO.getProvinceName(user.getMember().getSeat_provid());
+
+			place_map.put("now_place", now_place);
+			place_map.put("born_place", born_place);
+
+			session.setAttribute("place", place_map);
+
 			// //把用户的id写入visitor表中 王冰冰2015-12-11
 			int uid = user.getId();
 			int count = pictureDAO.count(uid);
@@ -554,6 +550,8 @@ public class UserController {
 			session.setAttribute("allconut", allcount);
 			session.setAttribute("myuser", user);
 			session.setAttribute("SYSTEMINFO", new SystemInfo(request));
+
+
 			// 会员登录时将用户保存在session中，用于页面判断是否首次登陆。
 			session.setAttribute("TURE", user);
 			// 会员登录时将session中管理的值删掉，防止交叉测试的时候，出现一些问题
@@ -573,15 +571,15 @@ public class UserController {
 	public String checkOldPwd(String name, String old,HttpServletRequest reqeust) throws Exception {
 		User user = new User();
 		Experience experience=new Experience();
-		System.out.println(name+"3322222222222222");
+//		System.out.println(name+"3322222222222222");
 		if(experienceDAO.getNumByName(name)!=null){
-			System.out.println(name+"$$###@%#$%#$%#$%#$%#$%$#%#$%");
+//			System.out.println(name+"$$###@%#$%#$%#$%#$%#$%$#%#$%");
 			String salt=experienceDAO.getSaltByNum(experienceDAO.getNumByName(name));
 			experience.setNum(experienceDAO.getNumByName(name));
 			experience.setSalt(salt);
 			experience.setPassword(MD5SaltUtils.encode(old, salt));
 			int count =experienceDAO.isValidPwd(experience);
-			System.out.println(count+")))))))))))))))))))))))))");
+//			System.out.println(count+")))))))))))))))))))))))))");
 			if (count > 0){
 				return "OK";
 			} else {
@@ -777,18 +775,18 @@ public class UserController {
 		System.out.println("===++++++"+userDAO.getUser(queryType).size());
 		User user = userDAO.getUser(queryType).get(0);
 		
-		inputHTMLFileName = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator
-					+ "html" + java.io.File.separator + "contractOfEverybody.html";
+		inputHTMLFileName = request.getServletContext().getRealPath("") + "contract" + File.separator
+					+ "html" + File.separator + "contractOfEverybody.html";
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUid(user.getId());
 		userInfo = userInfoDAO.get(userInfo).get(0);
 		String fileName = "";
 		// 产生随机数，文件的名字
 		fileName = String.valueOf((int) (1000000000 + Math.random() * 999999999));
-		htmlPath = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator + "temp"
-				+ java.io.File.separator + fileName + ".html";
-		pdfPath = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator + "temp"
-				+ java.io.File.separator + fileName + ".pdf";
+		htmlPath = request.getServletContext().getRealPath("") + "contract" + File.separator + "temp"
+				+ File.separator + fileName + ".html";
+		pdfPath = request.getServletContext().getRealPath("") + "contract" + File.separator + "temp"
+				+ File.separator + fileName + ".pdf";
 		// 获得修改后的路径htmlpath
 		String lasthtmlPath = generatePDF.replaceKeyWords(user, inputHTMLFileName, htmlPath, pdfPath, userInfo);
 		
@@ -871,11 +869,11 @@ public class UserController {
 		System.out.println(member.getName());
 		boolean flag = member.getStudent();
 		if (flag) {
-			inputDocFileName = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator + "doc"
-					+ java.io.File.separator + "contractForStudent.doc";
+			inputDocFileName = request.getServletContext().getRealPath("") + "contract" + File.separator + "doc"
+					+ File.separator + "contractForStudent.doc";
 		} else {
-			inputDocFileName = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator + "doc"
-					+ java.io.File.separator + "contractForEmployee.doc";
+			inputDocFileName = request.getServletContext().getRealPath("") + "contract" + File.separator + "doc"
+					+ File.separator + "contractForEmployee.doc";
 		}
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUid(user.getId());
@@ -883,8 +881,8 @@ public class UserController {
 		String fileName = "";
 		// 产生随机数，文件的名字
 		fileName = String.valueOf((int) (1000000000 + Math.random() * 999999999));
-		docPath = request.getServletContext().getRealPath("") + "contract" + java.io.File.separator + "temp"
-				+ java.io.File.separator + fileName + ".doc";
+		docPath = request.getServletContext().getRealPath("") + "contract" + File.separator + "temp"
+				+ File.separator + fileName + ".doc";
 		// 处理一下费用信息
 		int mid = member.getId();
 		int sum = (int) periodDAO.getSum(mid);
