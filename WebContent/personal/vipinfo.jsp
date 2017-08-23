@@ -123,11 +123,11 @@ $(function(){
 	}
 	//编辑资料
 	$(".btn").click(function(){
-		$("#name").html("<input type='text' placeholder='必填项' value='${myuser.member.name}' name='name' >");
-		$("#school").html("<input type='text' placeholder='必填项' value='${myuser.member.school}' name='school'> ");
+		/* $("#name").html("<input type='text' placeholder='必填项' value='${myuser.member.name}' name='name' >"); */
+		/* $("#school").html("<input type='text' placeholder='必填项' value='${myuser.member.school}' name='school'> ");
 		$("#company").html("<input type='text' placeholder='必填项' value='${myuser.member.company}' name='company'> ");
 		$("#mobile").html("<input type='text' placeholder='必填项' value='${myuser.member.mobile}' name='mobile'> ");
-		$("#graduateDate").html("<input type='text' placeholder='必填项' value="+$("#graduateDate").text()+" name='graduateDate'> ");
+		$("#graduateDate").html("<input type='text' placeholder='必填项' value="+$("#graduateDate").text()+" name='graduateDate'> "); */
 
 
         $("#born_place").html("<td><select id = 'bron_city'><c:forEach items='${citys}' var='city'><option value='${city.id}' <c:if test='${city.id == place.born_place.id}'>selected</c:if>>${city.name}</option></c:forEach></select></td>");
@@ -137,7 +137,7 @@ $(function(){
 
 		$("#btn").html("<input class='btn' type='button' value='保存信息' id='save'>");
 		$("#save").click(function(){
-			var name=$.trim($("[name='name']").val());
+			/* var name=$.trim($("[name='name']").val());
 			var mobile=$.trim($("[name='mobile']").val());
 			var reg=/[\u4e00-\u9fa5]+/;
 			var regTel=/^0[\d]{2,3}-[\d]{7,8}$/;
@@ -157,11 +157,11 @@ $(function(){
 			{
 				$("#info").html("日期输入不合法,例: 2000-07-15");
 				return false;
-			}
+			} */
 			$.ajaxSetup({async: false});
-			$.post("${pageContext.request.contextPath}/member/updateMember1.action",{"id":$("#id").val(),"uid":$("#uid").val(),"name":name,
-				"company":$("[name='company']").val(),"mobile":mobile,"sex":$("#sex").text(),"school":$("[name='school']").val(),
-				"graduateDate":$("[name='graduateDate']").val(), "provid": $("#now_city option:selected").val(), "schProId": $("#school_city option:selected").val(), "seat_provid": $("#bron_city option:selected").val()},function(data){
+			$.post("${pageContext.request.contextPath}/member/updateMember1.action",{"id":$("#id").val(),"uid":$("#uid").val(),"name":$("#name").text(),
+				"company":$("#company").text(),"mobile":$("#mobile").text(),"sex":$("#sex").text(),"school":$("#school").text(),
+				"graduateDate":$("#graduateDate").text(), "provid": $("#now_city option:selected").val(), "schProId": $("#school_city option:selected").val(), "seat_provid": $("#bron_city option:selected").val()},function(data){
 					if(data==1)
 						{
 							layer.msg('保存成功',{
