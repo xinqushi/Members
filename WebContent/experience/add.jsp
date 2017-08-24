@@ -138,6 +138,7 @@ $(function(){
 	});
 	function showdata(data){
 		var line="";
+		alert($("[name='province']").val());
 		for(i=0;i<data.length;i++){
 			if ($("[name='province']").val() == data[i].id){
 				line = line + "<option value="+data[i].id+" selected='selected'>";

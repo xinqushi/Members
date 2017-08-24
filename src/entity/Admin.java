@@ -7,6 +7,7 @@ public class Admin {
 	private String salt;
 	private String authority;
 	private String realname;
+	private String cauthority;
 	public String getSalt() {
 		return salt;
 	}
@@ -44,11 +45,18 @@ public class Admin {
 	public void setRealname(String realname) {
 		this.realname = realname;
 	}
+	
+	public String getCauthority() {
+		return cauthority;
+	}
+	public void setCauthority(String cauthority) {
+		this.cauthority = cauthority;
+	}
 	@Override
 	public String toString() {
 		return "Admin [id=" + id + ", name=" + name + ", pwd=" + pwd + ", salt=" + salt + ", authority=" + authority
-				+ ", realname=" + realname + "]";
+				+ ", realname=" + realname + ", cauthority=" + cauthority + "]";
 	}
-
+	
 
 }

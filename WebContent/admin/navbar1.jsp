@@ -192,6 +192,16 @@
 				</ul>
 			</li>
 			<li class="menu-list">
+				<a style="cursor: pointer">
+					<i></i><i class="Hui-iconfont">&#xe63a;</i>公司账目
+				</a>
+				<ul>
+					<li><a href="#/admin/companyaccount.jsp" class="menuItem" title="软件开发"><i></i><i></i><i></i>软件开发</a></li>
+					<li><a href="#/admin/commpanyaccount.jsp" class="menuItem" title="技术培训"><i></i><i></i><i></i>技术培训</a></li>
+					<li><a href="#/admin/fee.jsp" class="menuItem" title="缴费信息"><i></i><i></i><i></i>缴费信息</a></li>
+				</ul>
+			</li>
+			<li class="menu-list">
 				<a style="cursor: pointer" href="#/admin/history.jsp" class="menuItem" title="来访记录">
 					<i></i><i class="Hui-iconfont">&#xe70c;</i>来访记录
 				</a>

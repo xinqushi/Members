@@ -56,4 +56,8 @@ public class AdminDAO {
 	public List<Admin> getWorkAdmin() {
 		return adminMapper.getWorkAdmin();
 	}
+	
+	public List<Admin> getComAdmin(){
+		return adminMapper.getComAdmin();
+	}
 }

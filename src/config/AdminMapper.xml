@@ -36,5 +36,9 @@
 	<select id="getWorkAdmin" resultType="entity.Admin">
 		select * from admin where authority != 2
 	</select>
+	<select id="getComAdmin" resultType="entity.Admin">
+		select id , realname , cauthority from admin where cauthority != 2
+	</select>
+	
 	
 </mapper>

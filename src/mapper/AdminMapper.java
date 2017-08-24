@@ -18,4 +18,5 @@ public interface AdminMapper {
 	public int modifyAuthority(Admin admin);
 	public String getLoginAuthority(String name);
 	public List<Admin> getWorkAdmin();
+	public List<Admin> getComAdmin();
 }

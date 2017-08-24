@@ -54,6 +54,7 @@ $(function(){
 			line=line + "<th width='400'>沟通内容</th>";
 			line=line + "</tr>";
 			line=line + "</thead>"
+			//alert(JSON.stringify($(data[0].content)))
 			for(i=0;i<data.length;i++){
 					line=line + "<tr>"
 					line=line + "<td class='text-c'>" + (i+1)+ "</td>";
@@ -67,6 +68,7 @@ $(function(){
 					line=line + "<td class='text' id='text"+i+"' lang='"+$(data[i].content).text()+"'></td>";
 					line=line + "</tr>"
 				}
+			alert($(data[0].content).text())
 			$("#communication").html(line);
 			var maxwidth = 30;
 			for(i=0;i<data.length;i++){
