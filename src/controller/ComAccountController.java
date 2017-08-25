@@ -89,7 +89,7 @@ public class ComAccountController {
 		System.out.println(companyAccountDTO);
 		int page = companyAccountDTO.getPage().getCurrentPage();
 		//设置分页选项
-		companyAccountDTO.getPage().setPageSize(3);
+		companyAccountDTO.getPage().setPageSize(10);
 		String url = "";
 		int btnCount = 5;
 		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
