@@ -198,7 +198,6 @@
 				<ul>
 					<li><a href="#/admin/companyaccount.jsp" class="menuItem" title="软件开发"><i></i><i></i><i></i>软件开发</a></li>
 					<li><a href="#/admin/commpanyaccount.jsp" class="menuItem" title="技术培训"><i></i><i></i><i></i>技术培训</a></li>
-					<li><a href="#/admin/fee.jsp" class="menuItem" title="缴费信息"><i></i><i></i><i></i>缴费信息</a></li>
 				</ul>
 			</li>
 			<li class="menu-list">
