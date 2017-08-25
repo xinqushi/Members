@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CompanyAccountMapper">
+	<insert id="add" parameterType="entity.CompanyAccount">
+		insert into companyaccount(arid,fid,ftype,aid,date,money,remark,details,mtype) values 
+		(#{province.id},#{companyFirm.id},#{ftype},#{admin.id},#{date},#{money},#{remark},#{details},#{mtype})
+	</insert>
+	<update id="modifyCompanyAccountById" parameterType="entity.CompanyAccount">
+		update companyaccount set arid = #{province.id},fid = #{companyFirm.id} ,date = #{date},
+		money=#{money},remark= #{remark},details=#{details},mtype=#{mtype} where id = #{id} 
+	</update>
+	<update id="ReviewComAccountById" parameterType="entity.CompanyAccount">
+		update companyaccount set review = #{review} where id = #{id} 
+	</update>
+	<select id="getCompanyAccountById" resultMap="comMap" parameterType="java.lang.Integer">
+				SELECT
+					ca.id id,
+					ca.ftype ftype,
+					ca.date date,
+					ca.money money,
+					ca.remark remark,
+					ca.details details,
+					ca.mtype mtype,
+					ca.arid arid,
+					ca.aid aid,
+					a.realname realname,
+					cf.id fid,
+					cf.`name` fname,
+					p.`name` pname
+				FROM
+					companyaccount ca,
+					companyfirm cf,
+					province p,
+					admin a
+				WHERE
+					ca.aid = a.id
+					AND ca.fid = cf.id
+					AND ca.arid = p.id
+					AND ca.id=#{caid}
+	</select>
+	<select id="getComAccountByPage" resultMap="comMap" parameterType="dto.CompanyAccountDTO">
+		SELECT
+			ca.id id,
+			ca.ftype ftype,
+			ca.date date,
+			ca.money money,
+			ca.remark remark,
+			ca.mtype mtype,
+			ca.arid arid,
+			ca.aid aid,
+			ca.review review,
+			a.realname realname,
+			cf.id fid,
+			cf.`name` fname,
+			p.`name` pname
+		FROM
+			companyaccount ca,
+			companyfirm cf,
+			province p,
+			admin a
+		WHERE
+			ca.aid = a.id
+			AND ca.fid = cf.id
+			AND ca.arid = p.id
+			AND ca.ftype = #{ftype}
+			<if test="admin.id != 0">
+				AND a.id = #{admin.id}
+			</if>
+			<if test="province != null">
+				AND p.id = #{province.id}
+			</if>
+			ORDER BY ca.id DESC
+	</select>
+	
+	<select id="getdetailsById" parameterType="int" resultType="String">
+		select details from companyaccount where id = #{id}
+	</select>
+	
+	<select id="getMoneyType" resultType="entity.CompanyFirm" parameterType="int">
+		select * from companyfirm where ftype = #{ftype};
+	</select>
+	<select id="checkExists" resultType="int" parameterType="String">
+		select count(*) from admin where realname = #{realname};
+	</select>
+	
+	<delete id="deleteComAccountById" parameterType="int">
+		delete from companyaccount WHERE id = #{id}
+	</delete>
+	
+	<resultMap type="entity.CompanyAccount" id="comMap">
+					<id column="id" property="id"/>				
+			<result column="ftype" property="ftype"/>
+			<result column="date" property="date"/>
+			<result column="money" property="money"/>
+			<result column="remark" property="remark"/>
+			<result column="details" property="details"/>
+			<result column="mtype" property="mtype"/>
+			<result column="review" property="review"/>
+			<association property="admin" javaType="entity.Admin">
+				<id column="aid" property="id"/>
+				<result column="realname" property="realname"/>
+			</association>
+			<association property="province" javaType="entity.Province">
+				<id column="arid" property="id"/>
+				<result column="pname" property="name"/>
+			</association>
+			<association property="companyFirm" javaType="entity.CompanyFirm">
+				<id column="fid" property="id"/>
+				<result column="fname" property="name"/>
+			</association>
+	</resultMap>
+	
+</mapper>
