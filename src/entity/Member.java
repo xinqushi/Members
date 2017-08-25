@@ -42,6 +42,17 @@ public class Member {
 	private int periodStatus;
 	private Period period;
 
+	// 增加学校所在地id - 曾小晨
+	private int schProId;
+
+	public int getSchProId() {
+		return schProId;
+	}
+
+	public void setSchProId(int schProId) {
+		this.schProId = schProId;
+	}
+
 	public int getPeriodStatus() {
 		return periodStatus;
 	}
@@ -266,7 +277,7 @@ public class Member {
 		return time;
 	}
 
-	public void setTime(java.util.Date time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 

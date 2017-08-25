@@ -107,6 +107,7 @@
 		graduateDate,
 		province,
 		seat_provid,
+		schProId,
 		begintime,
 		endtime,
 		noticeTime,

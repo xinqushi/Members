@@ -16,7 +16,8 @@
 	}
 	span{width: 36px;font-size:11px}
 </style>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jslib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jslib/currency.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/myfile.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -49,7 +50,7 @@ $(function(){
 				$("#tabsC").append("<ul>")
 				for(var i=0;i<data.length;i++){
 					//$("#tabsC").append("<li><a href=${pageContext.request.contextPath}/member/setMember.action?name=" + data[i] + "><span>" + data[i] + "</span></a></li>");	
-					$("#tabsC").append("<li><a href='javascript:void(0)' class='setMember'><span>" + data[i] + "</span></a></li>");
+					$("#tabsC").append("<li><a href='javascript:void(0)' class='setMember'><span>" + data[i].name + "</span></a></li>");
 					
 				}
 				$("#tabsC").append("<li><a href='javascript:void(0)' class='setMember'><span>所有人</span></a></li>");

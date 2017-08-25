@@ -115,6 +115,7 @@
 	<select id="checkValid" parameterType="entity.User" resultType="entity.User">
 		select * from user where name=#{name} and pwd=#{pwd}
 	</select>
+	<!-- 增加了出生的字段 - 学校所在地（曾小晨） -->
 	<select id="getMemberInfo" parameterType="entity.User" resultMap="memberinfo">
 				select 	
 						u.id			id,
@@ -128,6 +129,7 @@
 						m.name 			realName,
 						m.sex  			sex,
 						m.school		school,
+						m.schProId		schProId,
 						m.company		company,
 						m.mobile		mobile,
 						m.student		student,
@@ -140,6 +142,7 @@
 						m.restInterest	restInterest,
 						m.fee			fee,
 						m.provid        provid,
+						m.seat_provid	seat_provid,
 						m.summaryflag	summaryflag
 						from user u,member m 
 						where u.id=m.uid 
@@ -467,6 +470,7 @@
 			<result column="realName" property="name"/>
 			<result column="sex" property="sex"/>
 			<result column="school" property="school"/>
+			<result column="schProId" property="schProId"/>
 			<result column="company" property="company"/>
 			<result column="mobile" property="mobile"/>
 			<result column="student" property="student"/>

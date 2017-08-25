@@ -1,3 +1,4 @@
+
 /* DaTouWang URL: www.datouwang.com */
 $(document).ready(function() {
 	$.areaSelect = function(init) {
@@ -10349,3 +10350,5 @@ $(document).ready(function() {
 	}
 
 })
+
+  

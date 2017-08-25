@@ -151,9 +151,9 @@
 	</select>
 	
 	<!--
-	 * 修改：添加出生地seat_provid
-	 * 作者：王德斌
-	 * 日期：2016-10-13
+	 * 修改：添加出生地seat_provid(增加学校所在地：schProId)
+	 * 作者：王德斌(曾小晨)
+	 * 日期：2016-10-13(2017-08-21)
 	 -->
 	<insert id="update" parameterType="entity.Member"   useGeneratedKeys="true" keyProperty="id">
 	<if test="id == 0"> 
@@ -163,6 +163,7 @@
 			name,
 			sex,
 			school,
+			schProId,
 			company,
 			mobile,
 			student,
@@ -181,6 +182,7 @@
 			#{name},
 			#{sex},
 			#{school},
+			#{schProId},
 			#{company},
 			#{mobile},
 			#{student},
@@ -200,6 +202,7 @@
 			name=#{name},
 			sex=#{sex},
 			school=#{school},
+			schProId=#{schProId},
 			company=#{company},
 			mobile=#{mobile},
 			student=#{student},

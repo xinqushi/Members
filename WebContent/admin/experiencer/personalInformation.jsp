@@ -28,7 +28,7 @@ $(function() {
 		content += "<tr><td>用户名：</td><td>" + data.num + "</td></tr>";
 		content += "<tr><td>真实姓名：</td><td>" + data.name + "</td></tr>";
 		content += "<tr><td>性别：</td><td>" + data.sex + "</td></tr>";
-		content += "<tr><td>学校：</td><td>" + data.school + "</td></tr>";
+		content += "<tr><td>学校名称：</td><td>" + data.school + "</td></tr>";
 		content += "<tr><td>工作单位：</td><td>" + ((!data.company) ? "" : data.company) + "</td></tr>";
 		content += "<tr><td>联系电话：</td><td>" + data.phone + "</td></tr>";
 		content += "<tr><td>QQ号码</td><td>" + ((!data.qq) ? "无" : data.qq) + "</td></tr>";
@@ -39,6 +39,7 @@ $(function() {
 		content += "<tr><td>小助手</td><td>" + data.admin.realname + "</td></tr>";
 		content += "<tr><td>是否写周报</td><td>" + (data.summaryflag ? "是" : "否") + "</td></tr>";
 		content += "<tr><td>是否会员</td><td>" + (data.flag ? "是" : "否") + "</td></tr>";
+
 		$("#table").html(content);
 	}
 });

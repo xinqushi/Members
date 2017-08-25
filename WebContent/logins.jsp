@@ -50,9 +50,9 @@ $(function(){
 		});
 		return false;
 	});
-	/* $("#admin").click(function(){
-			$(".form-signin").attr("action","${pageContext.request.contextPath}/admin/check.action");
-	}); */
+	<%--$("#admin").click(function(){--%>
+			<%--$(".form-signin").attr("action","${pageContext.request.contextPath}/admin/check.action");--%>
+	<%--}); --%>
 	$(".img-circle").dblclick(function(){
 		//location.href="${pageContext.request.contextPath}/user/register.jsp"; 
 		location.href="${pageContext.request.contextPath}/user/register2.jsp";

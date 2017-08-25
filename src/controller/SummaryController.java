@@ -1266,6 +1266,7 @@ public class SummaryController {
 	@RequestMapping("/checkRemind.action")
 	public int checkRemind(HttpSession session) {
 		try {
+			// 空指针...
 			int mylastpid = (int) session.getAttribute("MyLastSummary");
 			return summaryDAO.getRemind(mylastpid);
 		} catch (Exception e) {

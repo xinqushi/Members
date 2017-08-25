@@ -17,8 +17,8 @@ public interface NoticeMapper {
 	public Map<String, Object> getLastest();
 	public String getnoticeTime(int uid);
 	public String getnoticeExperienceTime(int eid);
-	public void updatenoticeTime(Map<String,Object> map);
-	public void updatenoticeExperienceTime(Map<String,Object> map);
+	public void updatenoticeTime(Map<String, Object> map);
+	public void updatenoticeExperienceTime(Map<String, Object> map);
 	public List<Map<String, Object>> getNotices();
 	public void delNotice(int id);
 	public List<Notice> getAllByPage(NoticeDTO noticeDTO);

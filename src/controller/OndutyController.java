@@ -1,6 +1,5 @@
 package controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,9 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.util.SSCellRange;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.sym.Name;
 
 import dao.AccountLogDAO;
 import dao.MemberDAO;
@@ -32,13 +28,10 @@ import dto.OndutyDTO;
 import entity.AccountLog;
 import entity.Member;
 import entity.OnDuty;
-import entity.StatusCode;
 import entity.User;
-import mapper.OnDutyLogMapper;
 import tools.Authentication;
 import tools.DateFormatUtils;
 import tools.NavigationBar;
-import tools.Paging;
 import tools.ReturnJson;
 
 /**

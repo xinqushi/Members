@@ -97,5 +97,5 @@ public interface SummaryMapper {
 	public List<Summary> getSummarys(SummaryDTO summaryDTO);
 
 	public List<LookSummary> getExperienceSummarys(
-			String name);
+            String name);
 }

@@ -3,15 +3,14 @@ package controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import dao.*;
+import entity.*;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -19,17 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dao.CommunicationDAO;
-import dao.ExperienceDAO;
-import dao.MemberDAO;
-import dao.UserDAO;
 import dto.ExperienceDTO;
-import entity.Admin;
-import entity.Clue;
-import entity.Communication;
-import entity.Experience;
-import entity.Member;
-import entity.User;
 import tools.MD5SaltUtils;
 import tools.NavigationBar;
 import tools.RandomNumberUtils;
@@ -48,6 +37,8 @@ public class ExperienceController {
 	UserDAO userDAO;
 	@Resource
 	MemberDAO MemberDAO;
+	@Resource
+	ProvinceDAO provinceDAO;
 
 	/*
 	 * 功能:添加体验者 作者:刘娈莎 日期2016-5-24
@@ -317,10 +308,10 @@ public class ExperienceController {
 		json.put("returnMap", returnMap);
 		return json.toString();
 	}
-
+//------------------------------------------------------------------------------------------------------------------------------------------------
 	@ResponseBody
 	@RequestMapping("/getExperienceInfoById")
-	public Result getExperienceInfoById(int eid) {
+	public Result getExperienceInfoById(int eid, HttpSession session) {
 		return experienceDAO.getExperienceInfoById(eid);
 	}
 

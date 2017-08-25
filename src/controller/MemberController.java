@@ -34,6 +34,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import dao.*;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -54,14 +55,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import dao.AccountLogDAO;
-import dao.CommunicationDAO;
-import dao.InterestDAO;
-import dao.MemberDAO;
-import dao.PeriodDAO;
-import dao.PictureDAO;
-import dao.UserDAO;
-import dao.UserInfoDAO;
 import dto.AccountLogDTO;
 import dto.CostDTO;
 import dto.InterestDTO;
@@ -84,14 +77,7 @@ import entity.ResultType;
 import entity.Summary;
 import entity.User;
 import entity.UserInfo;
-import tools.DateFormatUtils;
-import tools.JsonUtils;
-import tools.MD5SaltUtils;
-import tools.NavigationBar;
-import tools.Paging;
-import tools.RandomNumberUtils;
-import tools.Result;
-import tools.SummaryTitle;
+import tools.*;
 
 @Controller
 @RequestMapping("/member")
@@ -113,6 +99,9 @@ public class MemberController {
 	PictureDAO pictureDAO;
 	@Resource
 	CommunicationDAO communicationDAO;
+	@Resource
+	ProvinceDAO provinceDAO;
+
 	int sumpageSize = 9;
 
 	/*
@@ -1358,7 +1347,7 @@ public class MemberController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getdata")
-	public String getData(int id, java.util.Date date, HttpSession session) throws IOException {
+	public String getData(int id, Date date, HttpSession session) throws IOException {
 		// 截止当日应交本金
 		double amount = periodDAO.getPeriodByMid(id);
 		// 截止当日应交利息
@@ -1753,10 +1742,12 @@ public class MemberController {
 
 	/*
 	 * 功能：修改会员信息页面，部分前台缺少字段重新写入member中,添加判断session是否过期 作者：左琪 日期：2016-05-18
+	 * 功能：增加修改地区，作者：曾小晨 日期：2017-08-21
 	 */
 	@RequestMapping("updateMember1.action")
 	@ResponseBody
 	public String updateMember1(Member member, HttpSession session) {
+
 		User user = (User) session.getAttribute("myuser");
 		if (user != null) {
 			Member member2 = memberDAO.getMemById(member.getId());
@@ -1768,14 +1759,35 @@ public class MemberController {
 			member.setRestAmount(member2.getRestAmount());
 			member.setRestInterest(member2.getRestInterest());
 			member.setFee(member2.isFee());
-			member.setProvid(member2.getProvid());
+
+			// 修改了之后注册时间没有了
+			member.setTime(member2.getTime());
+
+//			member.setProvid(member2.getProvid());
 			member.setAid(member2.getAid());
-			System.out.println(member);
+
 			// 更新member
 			memberDAO.update(member);
 			// 将修改后的member信息重新存入session
 			user.setMember(member);
 			session.setAttribute("myuser", user);
+
+			// 更新信息
+			Map place_map = new HashMap();
+			// 得到学校的地区名字
+			Province school_place = provinceDAO.getProvinceName(member.getSchProId());
+			place_map.put("school_place", school_place);
+			// 得到所在地
+			Province now_place = provinceDAO.getProvinceName(member.getProvid());
+			// 得到出生地
+			Province born_place = provinceDAO.getProvinceName(member.getSeat_provid());
+
+			place_map.put("now_place", now_place);
+			place_map.put("born_place", born_place);
+
+			session.removeAttribute("place");
+			session.setAttribute("place", place_map);
+
 			return "1";
 		}
 		return "0";
@@ -2018,11 +2030,11 @@ public class MemberController {
 			if (letter == tools.PinYinUtil.getPinYin(list.get(i).getName()).charAt(0))
 				returnlist.add(list.get(i));
 		}
-		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+	/*	HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("list", returnlist);
 		JSONObject json = new JSONObject();
-		json.put("returnMap", returnMap);
-		 return returnlist;
+		json.put("returnMap", returnMap);*/
+		return returnlist;
 	}
 
 	/*
@@ -2039,8 +2051,13 @@ public class MemberController {
 		System.out.println(request.getParameter("name"));
 		if (session.getAttribute("myuser") != null)
 			session.removeAttribute("myuser");
+
+		if (session.getAttribute("place") != null)
+			session.removeAttribute("place");
+
 		System.out.println(session.getAttribute("myuser"));
 		String cname = request.getParameter("name");
+		// 通过名字得到会员信息
 		Member member = memberDAO.getMemByName(cname);
 		// 获取联系人信息
 		UserInfo userinfo = userInfoDAO.getUserInfoByUid(member.getUid());
@@ -2056,6 +2073,24 @@ public class MemberController {
 		user.setAllMonth(periodDAO.getAllMonthByMid(mid) - 2);
 		user.setLast(periodDAO.getLast(mid));
 		user.setDelayMonth(periodDAO.getDelayMonthyByMid(mid));
+
+		// 得到被点击的会员地区信息
+		Map map = new HashMap();
+		// experience 学校所在地id（默认0） - 出生地id - 所在地
+		Province province = provinceDAO.getProvinceName(member.getProvid());
+		Province born = provinceDAO.getProvinceName(member.getSeat_provid());
+		Province school = provinceDAO.getProvinceName(member.getSchProId());
+
+		map.put("province", province);
+		map.put("born", born);
+		map.put("school", school);
+
+		session.setAttribute("place", map);
+
+		// 得到所有的城市进行前端展示
+		List<Province> citys = provinceDAO.getProvinceAll();
+		session.setAttribute("citys", citys);
+
 		session.setAttribute("myuser", user);
 		System.out.println("123" + session.getAttribute("myuser"));
 		return "../admin/navbar1";
